@@ -5,8 +5,8 @@ const height = Dimensions.get('window').height;
 
 export default {
   window: {
-    width,
-    height,
+    width: width,
+    height: height,
   },
   isSmallDevice: width < 375,
 };
