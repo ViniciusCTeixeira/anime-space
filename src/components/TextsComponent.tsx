@@ -1,10 +1,11 @@
 import {Text as DefaultText} from "react-native";
-import {ThemeProps, useThemeColor} from "../../resources/useThemeColor";
+import {ThemeProps} from "../resources/types/ThemesType";
+import {UseThemeColor} from "../services/ThemeColorService";
 
 export type TextProps = ThemeProps & DefaultText['props'];
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const color = UseThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
