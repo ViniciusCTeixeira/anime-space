@@ -1,18 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AnimesProps} from "../resources/types/AnimesType";
+import {MangasProps} from "../../types/Mangas";
 
 export async function Get(){
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: MangasProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
         return sites;
     } catch (e) {
         return null;
     }
 }
-export async function Save(site: AnimesProps) {
+export async function Save(site: MangasProps) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: MangasProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
         sites.push(site);
         await AsyncStorage.setItem('@favoritos', JSON.stringify(sites))
         return true;
@@ -21,9 +21,9 @@ export async function Save(site: AnimesProps) {
     }
 }
 
-export async function Update(site: AnimesProps) {
+export async function Update(site: MangasProps) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: MangasProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {
@@ -38,9 +38,9 @@ export async function Update(site: AnimesProps) {
     }
 }
 
-export async function Delete(site: AnimesProps) {
+export async function Delete(site: MangasProps) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: MangasProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {

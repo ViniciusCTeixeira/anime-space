@@ -1,26 +1,20 @@
-import * as React from 'react';
-import {FontAwesome} from '@expo/vector-icons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ColorSchemeName, Pressable} from 'react-native';
-import {TabBarIconFontAwesome, TabBarIconFeather} from './components/IconsComponent';
+import {GetThemeColors} from "../resources/ThemesColors";
+import {TabBarIconFeather, TabBarIconFontAwesome} from './components/Icons';
 
-import {RootStackParamList, RootTabParamList, RootTabScreenProps} from './resources/types/ReactNavigationType';
+import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types/ReactNavigation';
 
-import Colors from './resources/constants/ColorsConstant';
-import {UseColorScheme} from "./services/ThemeColorService";
-
-import NotFoundScreen from './screens/NotFoundScreen';
+import NotFound from './screens/NotFound';
 import TabMangas from './screens/mangas/TabMangas';
-import ModalMangas from './screens/mangas/ModalMangas';
 import TabAnimes from './screens/animes/TabAnimes';
-import ModalAnimes from './screens/animes/ModaAnimes';
 
-export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
+
+export default function Navigation() {
+    const Theme = GetThemeColors();
     return (
-        <NavigationContainer
-            theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <NavigationContainer theme={Theme.dark ? DarkTheme : DefaultTheme}>
             <Navigator/>
         </NavigationContainer>
     );
@@ -28,42 +22,27 @@ export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName
 
 function Navigator() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
+
     return (
         <Stack.Navigator initialRouteName="Root">
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
-            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
-            <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="ModalMangas" component={ModalMangas} options={{title: 'Novo Site'}}/>
-                <Stack.Screen name="ModalAnimes" component={ModalAnimes} options={{title: 'Novo Site'}}/>
-            </Stack.Group>
+            <Stack.Screen name="NotFound" component={NotFound} options={{title: 'Oops!'}}/>
         </Stack.Navigator>
     );
 }
+
 function BottomTabNavigator() {
-    const colorScheme = UseColorScheme();
     const BottomTab = createBottomTabNavigator<RootTabParamList>();
+    const Theme = GetThemeColors();
+
     return (
-        <BottomTab.Navigator initialRouteName="TabMangas" screenOptions={{tabBarActiveTintColor: Colors[colorScheme].tint}}>
+        <BottomTab.Navigator initialRouteName="TabMangas" screenOptions={{tabBarActiveTintColor: Theme.colors.tint}}>
             <BottomTab.Screen
                 name="TabMangas"
                 component={TabMangas}
                 options={({navigation}: RootTabScreenProps<'TabMangas'>) => ({
                     title: 'Mangas',
                     tabBarIcon: ({color}) => <TabBarIconFeather name="book-open" color={color}/>,
-                    headerRight: () => (
-                        <Pressable
-                            onPress={() => navigation.navigate('ModalMangas')}
-                            style={({pressed}) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                            <FontAwesome
-                                name="info-circle"
-                                size={25}
-                                color={Colors[colorScheme].text}
-                                style={{marginRight: 15}}
-                            />
-                        </Pressable>
-                    ),
                 })}
             />
             <BottomTab.Screen
@@ -72,20 +51,6 @@ function BottomTabNavigator() {
                 options={({navigation}: RootTabScreenProps<'TabAnimes'>) => ({
                     title: 'Animes',
                     tabBarIcon: ({color}) => <TabBarIconFontAwesome name="tv" color={color}/>,
-                    headerRight: () => (
-                        <Pressable
-                            onPress={() => navigation.navigate('ModalAnimes')}
-                            style={({pressed}) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                            <FontAwesome
-                                name="info-circle"
-                                size={25}
-                                color={Colors[colorScheme].text}
-                                style={{marginRight: 15}}
-                            />
-                        </Pressable>
-                    ),
                 })}
             />
         </BottomTab.Navigator>
