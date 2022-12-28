@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {GetThemeColors} from "../resources/ThemesColors";
+import {GetThemeColors} from "../resources/UseThemeColor";
 import {TabBarIconFeather, TabBarIconFontAwesome} from './components/Icons';
 
 import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types/ReactNavigation';

@@ -1,5 +1,5 @@
 import {Text as DefaultText} from "react-native";
-import {UseThemeColor} from "../../resources/ThemesColors";
+import {UseThemeColor} from "../../resources/UseThemeColor";
 
 import {TextProps} from "../../types/Themes";
 

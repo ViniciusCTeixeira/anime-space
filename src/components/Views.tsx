@@ -1,5 +1,5 @@
 import {View as DefaultView} from "react-native";
-import {UseThemeColor} from "../../resources/ThemesColors";
+import {UseThemeColor} from "../../resources/UseThemeColor";
 
 import {ViewStyle, ToolsStyle} from "../../assets/styles";
 
