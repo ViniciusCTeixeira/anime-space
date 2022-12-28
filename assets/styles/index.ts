@@ -19,6 +19,7 @@ export const TextStyle = StyleSheet.create({
 export const ViewStyle = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 10,
     },
     boxContainer: {
         alignItems: 'center',
@@ -29,3 +30,5 @@ export const ViewStyle = StyleSheet.create({
         marginTop: Constants.statusBarHeight,
     },
 });
+
+export const FormStyle = StyleSheet.create({});

@@ -1,23 +1,27 @@
 import { ColorSchemeName, useColorScheme as _useColorScheme } from 'react-native';
-
-import Themes from "./Themes";
+import {ThemesColorsProps} from "../types/Themes";
+import {lightTheme, darkTheme} from "./Themes";
 
 export function UseColorScheme(): NonNullable<ColorSchemeName> {
     return _useColorScheme() as NonNullable<ColorSchemeName>;
 }
 
-export function UseThemeColor(props: { light?: string; dark?: string }, colorName: keyof typeof Themes.light.colors & keyof typeof Themes.dark.colors) {
+export function UseThemeColor(props: { light?: string; dark?: string, colorName: keyof ThemesColorsProps['colors'] | undefined}) {
     const theme = UseColorScheme();
-    const colorFromProps = props[theme];
+    const themeColors = theme === 'dark' ? darkTheme : lightTheme;
 
-    if (colorFromProps) {
-        return colorFromProps;
+    if(props[theme]){
+        return props[theme];
     }
 
-    return Themes[theme].colors[colorName];
+    if(props.colorName){
+        return themeColors.colors[props.colorName]
+    }
+
+    return 'none';
 }
 
 export function GetThemeColors(){
     const theme = UseColorScheme();
-    return Themes[theme];
+    return theme === 'dark' ? darkTheme : lightTheme;
 }

@@ -36,13 +36,15 @@ function BottomTabNavigator() {
     const Theme = GetThemeColors();
 
     return (
-        <BottomTab.Navigator initialRouteName="TabMangas" screenOptions={{tabBarActiveTintColor: Theme.colors.tint}}>
+        <BottomTab.Navigator initialRouteName="TabMangas" screenOptions={{tabBarActiveTintColor: Theme.colors.primary, tabBarInactiveTintColor: Theme.colors.disabled}}>
             <BottomTab.Screen
                 name="TabMangas"
                 component={TabMangas}
                 options={({navigation}: RootTabScreenProps<'TabMangas'>) => ({
                     title: 'Mangas',
+                    headerTitleStyle: {color: Theme.colors.textPrimary},
                     tabBarIcon: ({color}) => <TabBarIconFeather name="book-open" color={color}/>,
+                    tabBarStyle: {paddingBottom: 5}
                 })}
             />
             <BottomTab.Screen
@@ -50,7 +52,9 @@ function BottomTabNavigator() {
                 component={TabAnimes}
                 options={({navigation}: RootTabScreenProps<'TabAnimes'>) => ({
                     title: 'Animes',
+                    headerTitleStyle: {color: Theme.colors.textPrimary},
                     tabBarIcon: ({color}) => <TabBarIconFontAwesome name="tv" color={color}/>,
+                    tabBarStyle: {paddingBottom: 5}
                 })}
             />
         </BottomTab.Navigator>
