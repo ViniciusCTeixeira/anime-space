@@ -3,6 +3,7 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import * as NavigationBar from 'expo-navigation-bar';
 import {Platform} from "react-native";
+import {Sleep} from "./Tools";
 
 export function CachedResources() {
     const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -19,6 +20,8 @@ export function CachedResources() {
                 await NavigationBar.setVisibilityAsync("hidden");
                 await NavigationBar.setBehaviorAsync("overlay-swipe");
             }
+
+            await Sleep(5000);
 
         } catch (e) {
             console.warn(e);
