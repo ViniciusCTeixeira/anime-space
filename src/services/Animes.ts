@@ -1,28 +1,40 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {AnimesProps} from "../../types/Animes";
+import {PagesProps} from "../../types/Pages";
 
 export async function Get(){
     try {
-        return <AnimesProps[]>JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        const data = await AsyncStorage.getItem('@animes');
+        if (data) {
+            let sites: PagesProps[] = await JSON.parse(data);
+            return sites;
+        }
+        return [];
     } catch (e) {
-        return null;
+        console.log(e)
+        return [];
     }
 }
-export async function Save(site: AnimesProps) {
+export async function Save(site: PagesProps | PagesProps[]) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
-        sites.push(site);
-        await AsyncStorage.setItem('@favoritos', JSON.stringify(sites))
+        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        if(Array.isArray(site)){
+            sites ? sites.concat(site) : sites = site;
+        }else{
+            sites ? sites.push(site) : sites = [site];
+        }
+
+        await AsyncStorage.setItem('@animes', JSON.stringify(sites))
         return true;
     } catch (e) {
+        console.log(e)
         return false;
     }
 }
 
-export async function Update(site: AnimesProps) {
+export async function Update(site: PagesProps) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {
@@ -30,16 +42,16 @@ export async function Update(site: AnimesProps) {
         }
 
         sites[indexToUpdate] = site;
-        await AsyncStorage.setItem('@favoritos', JSON.stringify(sites))
+        await AsyncStorage.setItem('@animes', JSON.stringify(sites))
         return true;
     } catch (e) {
         return false;
     }
 }
 
-export async function Delete(site: AnimesProps) {
+export async function Delete(site: PagesProps) {
     try {
-        let sites: AnimesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
+        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@animes'));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {
@@ -47,9 +59,19 @@ export async function Delete(site: AnimesProps) {
         }
 
         sites.splice(indexToUpdate, 1);
-        await AsyncStorage.setItem('@favoritos', JSON.stringify(sites))
+        await AsyncStorage.setItem('@animes', JSON.stringify(sites))
         return true;
     } catch (e) {
+        return false;
+    }
+}
+
+export async function Clear() {
+    try {
+        await AsyncStorage.setItem('@mangas', '')
+        return true;
+    } catch (e) {
+        console.log(e)
         return false;
     }
 }

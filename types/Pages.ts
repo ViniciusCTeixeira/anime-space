@@ -1,4 +1,4 @@
-export type AnimesProps = {
+export type PagesProps = {
     id: string;
     name: string;
     url: string;

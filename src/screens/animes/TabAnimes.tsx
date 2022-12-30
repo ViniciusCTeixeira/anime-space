@@ -1,6 +1,5 @@
 import {Container, View} from "../../components/Views";
-import {MonoText} from "../../components/Texts";
-import {Loading} from "../../components/Tools";
+import {Loading} from "../../components/Views";
 
 import {RootTabScreenProps} from "../../../types/ReactNavigation";
 

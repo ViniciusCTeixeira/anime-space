@@ -1,7 +1,7 @@
-import {View as DefaultView} from "react-native";
-import {UseThemeColor} from "../../resources/UseThemeColor";
+import {ActivityIndicator, View as DefaultView} from "react-native";
+import {GetThemeColors, UseThemeColor} from "../../resources/UseThemeColor";
 
-import {ViewStyle, ToolsStyle} from "../../assets/styles";
+import {ViewStyle} from "../../assets/styles";
 
 import {ViewProps} from "../../types/Themes";
 
@@ -21,5 +21,13 @@ export function Container(props: ViewProps) {
 export function Separator(props: ViewProps) {
     const {style, ...others} = props;
 
-    return <View style={[ToolsStyle.separator, style]} {...others} />;
+    return <View style={[ViewStyle.separator, style]} {...others} />;
+}
+
+export function Loading(props: ViewProps) {
+    const theme = GetThemeColors();
+    const {style, ...others} = props;
+    return <View style={[{flex: 1, justifyContent: "center", flexDirection: "row", padding: 10}, style]} {...others} >
+        <ActivityIndicator size="large" color={theme.colors.secondary}/>
+    </View>
 }

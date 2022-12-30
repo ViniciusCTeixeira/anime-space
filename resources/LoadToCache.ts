@@ -21,8 +21,6 @@ export function CachedResources() {
                 await NavigationBar.setBehaviorAsync("overlay-swipe");
             }
 
-            await Sleep(5000);
-
         } catch (e) {
             console.warn(e);
         } finally {
