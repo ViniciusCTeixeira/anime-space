@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
 import {FlatList, Text} from "react-native";
-import {Container, Loading, View} from '../../components/Views';
-import {PagesTouchableOpacity} from "../../components/Buttons";
-import {RootTabScreenProps} from '../../../types/ReactNavigation';
+import {Container, Loading, View} from '../components/Views';
+import {PagesTouchableOpacity} from "../components/Buttons";
+import {RootTabScreenProps} from '../../types/ReactNavigation';
 
-import {Get} from "../../services/Mangas";
-import {PagesProps} from "../../../types/Pages";
+import {Get} from "../services/Mangas";
+import {PagesProps} from "../../types/Pages";
 
-export default function TabMangas({navigation}: RootTabScreenProps<'TabMangas'>) {
+export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
     const [pages, setPages] = useState<PagesProps[]>([]);
 
     useEffect(() => {

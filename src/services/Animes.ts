@@ -68,7 +68,7 @@ export async function Delete(site: PagesProps) {
 
 export async function Clear() {
     try {
-        await AsyncStorage.setItem('@mangas', '')
+        await AsyncStorage.setItem('@animes', '')
         return true;
     } catch (e) {
         console.log(e)

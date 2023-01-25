@@ -1,4 +1,5 @@
 import {Text, View, TextInput} from "react-native";
+import {Picker} from '@react-native-picker/picker';
 
 export type ThemeProps = {
     lightColor?: string;
@@ -34,3 +35,5 @@ export type TextProps = ThemeProps & Text['props'];
 export type ViewProps = ThemeProps & View['props'];
 
 export type TextInputProps = ThemeProps & TextInput['props'];
+
+export type PickerProps = ThemeProps & Picker<any>['props'];
