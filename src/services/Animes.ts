@@ -74,6 +74,19 @@ export async function Delete(site: WebsitesProps, type: 0 | 1) {
     }
 }
 
+export async function Exists(url: string, type: 0 | 1) {
+    try {
+        let key  = type ? "@animes" : "@animeWebsites";
+
+        let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
+        let indexToUpdate = sites.findIndex(item => item.url === url);
+
+        return indexToUpdate !== -1;
+    } catch (e) {
+        return false;
+    }
+}
+
 export async function Clear(type: 0 | 1) {
     try {
         let key  = type ? "@animes" : "@animeWebsites";

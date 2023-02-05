@@ -3,13 +3,13 @@ import {ActivityIndicator, Text, View} from "react-native";
 import {RootTabScreenProps} from '../../types/ReactNavigation';
 
 import {Get} from "../services/Mangas";
-import {PagesProps} from "../../types/Pages";
+import {WebsitesProps} from "../../types/Pages";
 
 export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
-    const [pages, setPages] = useState<PagesProps[]>([]);
+    const [pages, setPages] = useState<WebsitesProps[]>([]);
 
     useEffect(() => {
-        Get().then((r) => {
+        Get(1).then((r) => {
             setPages(r);
         })
     }, []);
