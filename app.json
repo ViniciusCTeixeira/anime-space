@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Otaku Space",
-    "slug": "otaku-space",
+    "name": "Anime Space",
+    "slug": "anime-space",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7a29922a-32fd-486a-9985-5a468baf2cb3"
+      }
+    },
+    "owner": "vinicius_teixeira"
   }
 }

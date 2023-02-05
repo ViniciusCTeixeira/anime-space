@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
-import {FlatList, Text} from "react-native";
-import {Container, Loading, View} from '../components/Views';
-import {PagesTouchableOpacity} from "../components/Buttons";
+import {ActivityIndicator, Text, View} from "react-native";
 import {RootTabScreenProps} from '../../types/ReactNavigation';
 
 import {Get} from "../services/Mangas";
@@ -17,14 +15,14 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
     }, []);
 
     return (
-        <Container colorName={'background'}>
-            <View colorName={'backgroundPaper'} style={{flex: 1, borderRadius: 10, padding: 10}}>
-                {
-                    pages.length
-                        ? pages.map((e) => {return <Text key={e.id}>{e.name}</Text>})
-                        : <Loading/>
-                }
-            </View>
-        </Container>
+        <View style={{flex: 1, borderRadius: 10, padding: 10}}>
+            {
+                pages.length
+                    ? pages.map((e) => {
+                        return <Text key={e.id}>{e.name}</Text>
+                    })
+                    : <ActivityIndicator size="large"/>
+            }
+        </View>
     );
 }

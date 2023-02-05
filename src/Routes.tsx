@@ -1,8 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {GetThemeColors} from "../resources/UseThemeColor";
-import {TabBarIconFeather, TabBarIconFontAwesome} from './components/Icons';
 
 import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types/ReactNavigation';
 
@@ -12,13 +10,12 @@ import SiteInfo from "./screens/SiteInfo";
 import Animes from './screens/Animes';
 import AddSite from "./screens/AddSite";
 import {Pressable} from "react-native";
-import {FontAwesome} from "@expo/vector-icons";
+import {Feather, FontAwesome} from "@expo/vector-icons";
 
 
 export default function Navigation() {
-    const Theme = GetThemeColors();
     return (
-        <NavigationContainer theme={Theme.dark ? DarkTheme : DefaultTheme}>
+        <NavigationContainer theme={DarkTheme}>
             <Navigator/>
         </NavigationContainer>
     );
@@ -41,17 +38,16 @@ function Navigator() {
 
 function BottomTabNavigator() {
     const BottomTab = createBottomTabNavigator<RootTabParamList>();
-    const Theme = GetThemeColors();
 
     return (
-        <BottomTab.Navigator initialRouteName="Mangas" screenOptions={{tabBarActiveTintColor: Theme.colors.primary, tabBarInactiveTintColor: Theme.colors.disabled}}>
+        <BottomTab.Navigator initialRouteName="Mangas" screenOptions={{tabBarActiveTintColor: "#42a5f5", tabBarInactiveTintColor: "rgba(255, 255, 255, 0.3)"}}>
             <BottomTab.Screen
                 name="Mangas"
                 component={Mangas}
                 options={({navigation}: RootTabScreenProps<'Mangas'>) => ({
                     title: 'Mangas',
-                    headerTitleStyle: {color: Theme.colors.textPrimary},
-                    tabBarIcon: ({color}) => <TabBarIconFeather name="book-open" color={color}/>,
+                    headerTitleStyle: {color: "#fff"},
+                    tabBarIcon: ({color}) => <Feather size={30} style={{marginBottom: -3}} name="book-open" color={color}/>,
                     tabBarStyle: {paddingBottom: 5},
                     headerRight: () => (
                         <Pressable
@@ -62,7 +58,7 @@ function BottomTabNavigator() {
                             <FontAwesome
                                 name="plus-circle"
                                 size={25}
-                                color={Theme.colors.textPrimary}
+                                color={"#fff"}
                                 style={{marginRight: 15}}
                             />
                         </Pressable>
@@ -74,8 +70,8 @@ function BottomTabNavigator() {
                 component={Animes}
                 options={({navigation}: RootTabScreenProps<'Animes'>) => ({
                     title: 'Animes',
-                    headerTitleStyle: {color: Theme.colors.textPrimary},
-                    tabBarIcon: ({color}) => <TabBarIconFontAwesome name="tv" color={color}/>,
+                    headerTitleStyle: {color: "#fff"},
+                    tabBarIcon: ({color}) => <FontAwesome size={30} style={{marginBottom: -3}} name="tv" color={color}/>,
                     tabBarStyle: {paddingBottom: 5},
                     headerRight: () => (
                         <Pressable
@@ -86,7 +82,7 @@ function BottomTabNavigator() {
                             <FontAwesome
                                 name="plus-circle"
                                 size={25}
-                                color={Theme.colors.textPrimary}
+                                color={"#fff"}
                                 style={{marginRight: 15}}
                             />
                         </Pressable>

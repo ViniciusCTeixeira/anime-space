@@ -1,4 +1,4 @@
-export type PagesProps = {
+export type WebsitesProps = {
     id: string;
     name: string;
     url: string;

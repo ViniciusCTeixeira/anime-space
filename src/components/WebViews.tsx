@@ -1,10 +1,14 @@
 import {WebView as ReactNativeWebview} from 'react-native-webview';
-import {ViewStyle} from "../../assets/styles";
+
+import Constants from "expo-constants";
 
 export function WebView(props: { url: string }) {
     return (
         <ReactNativeWebview
-            style={ViewStyle.webViewContainer}
+            style={{
+                flex: 1,
+                marginTop: Constants.statusBarHeight,
+            }}
             source={{uri: props.url}}
         />
     );

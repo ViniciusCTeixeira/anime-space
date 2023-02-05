@@ -1,12 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {PagesProps} from "../../types/Pages";
+import {WebsitesProps} from "../../types/Pages";
 
-export async function Get(){
+export async function Get(type: 0 | 1){
     try {
-        const data = await AsyncStorage.getItem('@mangas');
+        let key  = type ? "@mangas" : "@mangaWebsites";
+
+        const data = await AsyncStorage.getItem(key);
         if (data) {
-            let sites: PagesProps[] = await JSON.parse(data);
+            let sites: WebsitesProps[] = await JSON.parse(data);
             return sites;
         }
         return [];
@@ -15,16 +17,18 @@ export async function Get(){
         return [];
     }
 }
-export async function Save(site: PagesProps | PagesProps[]) {
+export async function Save(site: WebsitesProps | WebsitesProps[], type: 0 | 1) {
     try {
-        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
+        let key  = type ? "@mangas" : "@mangaWebsites";
+
+        let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         if(Array.isArray(site)){
             sites ? sites.concat(site) : sites = site;
         }else{
             sites ? sites.push(site) : sites = [site];
         }
 
-        await AsyncStorage.setItem('@mangas', JSON.stringify(sites))
+        await AsyncStorage.setItem(key, JSON.stringify(sites))
         return true;
     } catch (e) {
         console.log(e)
@@ -32,9 +36,11 @@ export async function Save(site: PagesProps | PagesProps[]) {
     }
 }
 
-export async function Update(site: PagesProps) {
+export async function Update(site: WebsitesProps, type: 0 | 1) {
     try {
-        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
+        let key  = type ? "@mangas" : "@mangaWebsites";
+
+        let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {
@@ -42,16 +48,18 @@ export async function Update(site: PagesProps) {
         }
 
         sites[indexToUpdate] = site;
-        await AsyncStorage.setItem('@mangas', JSON.stringify(sites))
+        await AsyncStorage.setItem(key, JSON.stringify(sites))
         return true;
     } catch (e) {
         return false;
     }
 }
 
-export async function Delete(site: PagesProps) {
+export async function Delete(site: WebsitesProps, type: 0 | 1) {
     try {
-        let sites: PagesProps[] = JSON.parse(<string>await AsyncStorage.getItem('@mangas'));
+        let key  = type ? "@mangas" : "@mangaWebsites";
+
+        let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
 
         if (indexToUpdate === -1) {
@@ -59,16 +67,18 @@ export async function Delete(site: PagesProps) {
         }
 
         sites.splice(indexToUpdate, 1);
-        await AsyncStorage.setItem('@mangas', JSON.stringify(sites))
+        await AsyncStorage.setItem(key, JSON.stringify(sites))
         return true;
     } catch (e) {
         return false;
     }
 }
 
-export async function Clear() {
+export async function Clear(type: 0 | 1) {
     try {
-        await AsyncStorage.setItem('@mangas', '')
+        let key  = type ? "@mangas" : "@mangaWebsites";
+
+        await AsyncStorage.setItem(key, '')
         return true;
     } catch (e) {
         console.log(e)

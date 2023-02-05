@@ -1,14 +1,12 @@
-import {Container, View} from "../components/Views";
-import {Loading} from "../components/Views";
-
+import React from 'react';
 import {RootStackScreenProps} from "../../types/ReactNavigation";
+import {ActivityIndicator} from "react-native";
+import {Container} from "../components/Views";
 
 export default function AddSite({navigation}: RootStackScreenProps<'AddSite'>) {
     return (
-        <Container colorName={'background'}>
-            <View colorName={'backgroundPaper'} style={{flex: 1, borderRadius: 10, padding: 10}}>
-                <Loading />
-            </View>
+        <Container>
+            <ActivityIndicator size="large" style={{flex: 1}}/>
         </Container>
     );
 }
