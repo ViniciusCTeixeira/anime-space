@@ -22,6 +22,7 @@ export async function Save(site: WebsitesProps | WebsitesProps[], type: 0 | 1) {
         let key  = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
+
         if(Array.isArray(site)){
             sites ? sites.concat(site) : sites = site;
         }else{

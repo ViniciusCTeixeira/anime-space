@@ -5,3 +5,8 @@ export type WebsitesProps = {
     image: string;
     isFavorite?: boolean | null;
 };
+
+export type MangasToSearchProps = {
+    id: string;
+    name: string;
+}

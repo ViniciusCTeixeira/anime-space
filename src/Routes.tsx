@@ -7,7 +7,6 @@ import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types
 
 import NotFound from './screens/NotFound';
 import Mangas from './screens/Mangas';
-import SiteInfo from "./screens/SiteInfo";
 import Animes from './screens/Animes';
 import AddSite from "./screens/AddSite";
 import {Pressable, View} from "react-native";
@@ -29,11 +28,8 @@ function Navigator() {
     return (
         <Stack.Navigator initialRouteName="Root">
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
-            <Stack.Group screenOptions={{presentation: 'modal'}}>
-                <Stack.Screen name="SiteInfo" component={SiteInfo} options={{title: 'Website Infos'}}/>
-                <Stack.Screen name="AddSite" component={AddSite} options={{title: 'Add Website'}}/>
-                <Stack.Screen name="WebView" component={WebView} options={({ route }) => ({ title: route.params.title })}/>
-            </Stack.Group>
+            <Stack.Screen name="AddSite" component={AddSite} options={{title: 'Add Website'}}/>
+            <Stack.Screen name="WebView" component={WebView} options={({ route }) => ({ title: route.params.title })}/>
             <Stack.Screen name="NotFound" component={NotFound} options={{title: 'Oops!'}}/>
         </Stack.Navigator>
     );

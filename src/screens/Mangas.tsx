@@ -19,7 +19,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
             {
                 pages.length
                     ? pages.map((e) => {
-                        return <Text key={e.id}>{e.name}</Text>
+                        return <Text key={e.id} style={{color: "white"}}>{e.name}</Text>
                     })
                     : <ActivityIndicator size="large"/>
             }
