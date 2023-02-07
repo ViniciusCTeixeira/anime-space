@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {MangasToSearchProps, WebsitesProps} from "../../types/Pages";
 
-export async function Get(type: 0 | 1){
+export async function Get(type: number){
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         const data = await AsyncStorage.getItem(key);
         if (data) {
@@ -32,9 +32,9 @@ export async function GetMangasToSearch(){
     }
 }
 
-export async function Save(site: WebsitesProps | WebsitesProps[], type: 0 | 1) {
+export async function Save(site: WebsitesProps | WebsitesProps[], type: number) {
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         if(Array.isArray(site)){
@@ -51,7 +51,7 @@ export async function Save(site: WebsitesProps | WebsitesProps[], type: 0 | 1) {
     }
 }
 
-export async function SaveMangasToSearch(site: MangasToSearchProps | MangasToSearchProps[]) {
+export async function SaveMangasToSearch(site: MangasToSearchProps) {
     try {
 
         let sites: MangasToSearchProps[] = JSON.parse(<string>await AsyncStorage.getItem("@mangasToSearch"));
@@ -69,9 +69,9 @@ export async function SaveMangasToSearch(site: MangasToSearchProps | MangasToSea
     }
 }
 
-export async function Update(site: WebsitesProps, type: 0 | 1) {
+export async function Update(site: WebsitesProps, type: number) {
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -88,9 +88,9 @@ export async function Update(site: WebsitesProps, type: 0 | 1) {
     }
 }
 
-export async function Delete(site: WebsitesProps, type: 0 | 1) {
+export async function Delete(site: WebsitesProps, type: number) {
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -124,9 +124,9 @@ export async function DeleteMangasToSearch(site: MangasToSearchProps) {
     }
 }
 
-export async function Exists(url: string, type: 0 | 1) {
+export async function Exists(url: string, type: number) {
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.url === url);
@@ -148,9 +148,9 @@ export async function ExistsMangasToSearch(name: string) {
     }
 }
 
-export async function Clear(type: 0 | 1) {
+export async function Clear(type: number) {
     try {
-        let key  = type ? "@mangas" : "@mangaWebsites";
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 
         await AsyncStorage.setItem(key, '')
         return true;

@@ -28,13 +28,9 @@ export async function WebsiteInfo(urlString: string) {
         const websiteTitle = html.slice(titleStartIndex, titleEndIndex);
 
         // Extract icon
-        const iconStartIndex = html.indexOf('<link rel="icon"');
-        const iconEndIndex = html.indexOf('" />', iconStartIndex);
-        const iconUrlStartIndex = html.indexOf('href="', iconStartIndex) + 6;
-        const iconUrlEndIndex = html.indexOf('"', iconUrlStartIndex);
-        const websiteIcon = html.slice(iconUrlStartIndex, iconUrlEndIndex);
+        const websiteIcon = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
 
-        return {title: websiteTitle, icon: websiteIcon};
+        return {title: websiteTitle.split('-')[0].trim().split('|')[0].trim(), icon: websiteIcon};
     } catch ({message}) {
         console.log(message);
         return;

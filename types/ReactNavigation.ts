@@ -10,8 +10,9 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  AddSite: undefined;
-  WebView: {url: string, title: string};
+  AddAnimes: undefined;
+  AddMangas: undefined;
+  WebView: {url: string, title: string, script?: string};
   NotFound: undefined;
 };
 
