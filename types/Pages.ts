@@ -4,6 +4,7 @@ export type WebsitesProps = {
     url: string;
     image: string;
     isFavorite?: boolean | null;
+    lastAcess?: string
 };
 
 export type MangasToSearchProps = {

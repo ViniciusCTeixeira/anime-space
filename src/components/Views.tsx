@@ -4,6 +4,7 @@ import {FontAwesome} from "@expo/vector-icons";
 
 import {MangasToSearchProps, WebsitesProps} from "../../types/Pages";
 import {DeleteMangasToSearch} from "../services/Mangas";
+import {UpdateLastAcess} from "../services/Animes";
 
 export function Container(props: DefaultView['props']) {
     const {style, ...others} = props;
@@ -23,7 +24,7 @@ export function Divider(props: DefaultView['props']) {
     return <DefaultView style={[{borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 5}, style]} {...others} />;
 }
 
-export function PagesList(props: {pages: WebsitesProps[], navigation: any, deleteItem: any}){
+export function PagesList(props: {pages: WebsitesProps[], navigation: any, deleteItem: any, updateLastAcess: any}){
     const ScreenWidth = Dimensions.get("window").width;
 
     return (
@@ -34,10 +35,12 @@ export function PagesList(props: {pages: WebsitesProps[], navigation: any, delet
         numColumns={2}
         renderItem={({item, index}) => (
             <TouchableOpacity
-                onPress={() => props.navigation.navigate({
+                onPress={() => {
+                    props.updateLastAcess(item);
+                    props.navigation.navigate({
                     name: 'WebView',
                     params: {url: item.url, title: item.name}
-                })}
+                })}}
                 style={{
                     flexDirection: "column",
                     borderWidth: 1,
@@ -56,6 +59,12 @@ export function PagesList(props: {pages: WebsitesProps[], navigation: any, delet
                 <View style={{flex: 1, alignItems: "center"}}>
                     <Text style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
                 </View>
+                {item.lastAcess
+                    && <View style={{flex: 1, alignItems: "center", marginVertical: 5}}>
+                        <Text style={{color: '#fff', fontSize: 10, fontWeight: 'bold'}}>{item.lastAcess}</Text>
+                    </View>
+                }
+
                 <TouchableOpacity
                     onPress={() => {
                         props.deleteItem(item)
@@ -67,6 +76,7 @@ export function PagesList(props: {pages: WebsitesProps[], navigation: any, delet
                         borderRadius: 15,
                         backgroundColor: "rgba(255, 0, 0, 0.3)",
                         alignItems: "center",
+                        justifyContent: "center",
                         marginVertical: 5,
                         marginHorizontal: 5,
                     }}>

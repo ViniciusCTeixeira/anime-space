@@ -14,6 +14,12 @@ export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
 
     const isFocused = useIsFocused();
 
+    const updateLastAcess = (item: WebsitesProps) => {
+        setLoading(true);
+        AnimesService.UpdateLastAcess(item, type).then();
+        setLoading(false);
+    }
+
     const deleteItem = (item: WebsitesProps) => {
         setLoading(true);
         Alert.alert('Delete', 'Do you really want to delete the record?', [
@@ -29,7 +35,8 @@ export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
                 },
             },
             {
-                text: 'Cancel', onPress: () => {},
+                text: 'Cancel', onPress: () => {
+                },
             }
         ]);
         setLoading(false);
@@ -41,7 +48,8 @@ export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
         }).catch((err) => {
             Alert.alert('Error!!!', 'Couldn\'t load', [
                 {
-                    text: 'OK', onPress: () => {}
+                    text: 'OK', onPress: () => {
+                    }
                 },
             ]);
         }).finally(() => setLoading(false))
@@ -75,7 +83,8 @@ export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
                     {
                         loading
                             ? <ActivityIndicator size="large"/>
-                            : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem}/>
+                            : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem}
+                                         updateLastAcess={updateLastAcess}/>
                     }
                 </View>
             </Paper>

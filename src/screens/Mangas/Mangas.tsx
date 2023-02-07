@@ -17,6 +17,14 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
 
     const isFocused = useIsFocused();
 
+    const updateLastAcess = (item: WebsitesProps) => {
+        setLoading(true);
+        if(type !== 2) {
+            MangasService.UpdateLastAcess(item, type).then();
+        }
+        setLoading(false);
+    }
+
     const deleteItem = (item: WebsitesProps) => {
         setLoading(true);
         if(type !== 2) {
@@ -118,7 +126,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
                             ? <ActivityIndicator size="large"/>
                             : type == 2
                                 ? <MangasToSearchList pages={mangasToSearch} navigation={navigation} deleteItem={deleteMangasToSearch} />
-                                : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem}/>
+                                : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess}/>
                     }
                 </View>
             </Paper>
