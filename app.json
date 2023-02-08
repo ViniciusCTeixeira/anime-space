@@ -2,7 +2,7 @@
   "expo": {
     "name": "Anime Space",
     "slug": "anime-space",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -13,7 +13,8 @@
       "backgroundColor": "#010101"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/7a29922a-32fd-486a-9985-5a468baf2cb3"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,7 +26,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vinicius_teixeira.animespace"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -35,6 +37,9 @@
         "projectId": "7a29922a-32fd-486a-9985-5a468baf2cb3"
       }
     },
-    "owner": "vinicius_teixeira"
+    "owner": "vinicius_teixeira",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }
