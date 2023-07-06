@@ -2,7 +2,7 @@ import * as React from "react";
 import {ActivityIndicator, TouchableOpacity, View} from "react-native";
 import {WebView as ReactNativeWebview} from 'react-native-webview';
 
-import {RootStackScreenProps} from "../../types/ReactNavigation";
+import {RootStackScreenProps} from "../../../types/ReactNavigation";
 
 export default function WebView({route, navigation}: RootStackScreenProps<'WebView'>){
     const script = route.params.script ?? ``;

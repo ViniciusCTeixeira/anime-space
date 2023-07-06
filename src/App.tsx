@@ -1,10 +1,15 @@
-import {StatusBar} from 'expo-status-bar';
-import {Platform} from "react-native";
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Platform, StatusBar, Image} from "react-native";
+import { Block, GalioProvider } from 'galio-framework';
 
+import {materialTheme} from './constants/';
 import {CachedResources} from "../resources/LoadToCache";
 
-import Navigation from './Routes';
+import { NavigationContainer } from '@react-navigation/native';
+import Screens from './navigation/Screens';
+
+// Before rendering any navigation stack
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 export default function App() {
     const isLoadingComplete = CachedResources();
@@ -14,11 +19,15 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
-            <Navigation/>
-            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'}/>
-        </SafeAreaProvider>
-    );
+        <NavigationContainer>
+          <GalioProvider theme={materialTheme}>
+            <Block flex>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <Screens />
+            </Block>
+          </GalioProvider>
+        </NavigationContainer>
+      );
 }
 
 
