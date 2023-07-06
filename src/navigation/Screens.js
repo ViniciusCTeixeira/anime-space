@@ -6,7 +6,7 @@ import { Images, materialTheme } from "../constants/";
 import ComponentsScreen from "../screens/Components";
 import CustomDrawerContent from "./Menu";
 import HomeScreen from "../screens/Home";
-import OnboardingScreen from "../screens/Onboarding";
+import OnboardingScreen from "../screens/Root";
 import ProScreen from "../screens/Pro";
 import ProfileScreen from "../screens/Profile";
 import React from "react";
