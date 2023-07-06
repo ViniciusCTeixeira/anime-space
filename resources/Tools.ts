@@ -25,13 +25,36 @@ export async function WebsiteInfo(urlString: string) {
         // Extract title
         const titleStartIndex = html.indexOf('<title>') + 7;
         const titleEndIndex = html.indexOf('</title>');
-        const websiteTitle = html.slice(titleStartIndex, titleEndIndex);
+
+        let websiteTitle = html.slice(titleStartIndex, titleEndIndex);
+        websiteTitle = websiteTitle.split('-')[0].trim().split('|')[0].trim().split(':')[0].trim().split('&#8211;')[0].trim();
+        websiteTitle = websiteTitle.replace(/(\s\(.*?\))|<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
 
         // Extract icon
-        const websiteIcon = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
+        const gstatic = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
+        const websiteIcon = await urlToBase64(gstatic) ?? gstatic;
 
-        return {title: websiteTitle.split('-')[0].trim().split('|')[0].trim(), icon: websiteIcon};
-    } catch ({message}) {
+        return { title: websiteTitle, icon: websiteIcon };
+    } catch (message: any) {
+        console.log(message);
+        return;
+    }
+}
+
+export async function urlToBase64(urlString: string) {
+    try {
+        const toDataURL = await fetch(urlString)
+            .then(response => response.blob())
+            .then(blob => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            }));
+
+        return toDataURL;
+
+    } catch (message: any) {
         console.log(message);
         return;
     }
