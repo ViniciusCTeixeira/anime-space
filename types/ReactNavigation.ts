@@ -10,19 +10,20 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootDrawerParamList> | undefined;
-  Root: NavigatorScreenParams<RootDrawerParamList> | undefined;
   AddAnimes: undefined;
   AddMangas: undefined;
-  WebView: { url: string, title: string, script?: string };
   NotFound: undefined;
+  WebView: { url: string, title: string, script?: string };
 };
 
 export type RootDrawerParamList = {
+  Home: undefined;
   Mangas: undefined;
   Animes: undefined;
+  Search: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootDrawerParamList> = CompositeScreenProps<
+export type RootDrawerScreenProps<Screen extends keyof RootDrawerParamList> = CompositeScreenProps<
   DrawerScreenProps<RootDrawerParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;

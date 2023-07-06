@@ -1,12 +1,12 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, StatusBar, Dimensions } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
-import { RootTabScreenProps } from './../../types/ReactNavigation';
+import { RootTabScreenProps } from '../../../types/ReactNavigation';
 
 const { height, width } = Dimensions.get('screen');
 
-import materialTheme from '../constants/Theme';
-import Images from '../constants/Images';
+import materialTheme from '../../constants/Theme';
+import Images from '../../constants/Images';
 
 export default function Root({ navigation }: RootTabScreenProps<'Mangas'>) {
   return (
