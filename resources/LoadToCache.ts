@@ -6,13 +6,14 @@ import {Platform} from "react-native";
 
 export function CachedResources() {
     const [isLoadingComplete, setLoadingComplete] = useState(false);
+    
     async function loadResourcesAndDataAsync() {
         try {
             await SplashScreen.preventAutoHideAsync();
 
             // Load fonts
             await Font.loadAsync({
-                'roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+                'galio': require('../assets/fonts/galioExtra.ttf'),
             });
 
             if (Platform.OS !== 'ios') {

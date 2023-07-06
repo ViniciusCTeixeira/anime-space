@@ -5,7 +5,7 @@ import {WebView as ReactNativeWebview} from 'react-native-webview';
 import {RootStackScreenProps} from "../../types/ReactNavigation";
 
 export default function WebView({route, navigation}: RootStackScreenProps<'WebView'>){
-    const script = route.params.script ? route.params.script : ``;
+    const script = route.params.script ?? ``;
 
     return (
         <>
