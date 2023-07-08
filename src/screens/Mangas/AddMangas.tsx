@@ -1,9 +1,11 @@
 import React from 'react';
-import * as Mangas from '../../services/Mangas';
 import uuid from 'react-native-uuid';
 import {ActivityIndicator, Alert, Button, TextInput} from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import {Container, Divider, Paper} from "../../components/Views";
+
+import * as MangasService from '../../services/Mangas';
+import * as MangasToSearch from '../../services/MangasToSearch';
 
 import {RootStackScreenProps} from "../../../types/ReactNavigation";
 import {MangasToSearchProps, WebsitesProps} from "../../../types/Pages";
@@ -50,7 +52,7 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
                 isFavorite: false
             };
 
-            let exist = await Mangas.Exists(text, type);
+            let exist = await MangasService.Exists(text, type);
             if (exist) {
                 Alert.alert('Error!!!', 'Already registered!', [
                     {
@@ -62,7 +64,7 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
                 return;
             }
 
-            let save = await Mangas.Save(site, type);
+            let save = await MangasService.Save(site, type);
             if (save) {
                 Alert.alert('Success!!!', 'Successfully registered!', [
                     {
@@ -80,7 +82,7 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
             }
 
         } else {
-            let exist = await Mangas.ExistsMangasToSearch(text);
+            let exist = await MangasToSearch.Exists(text);
             if (exist) {
                 Alert.alert('Error!!!', 'Already registered!', [
                     {
@@ -96,7 +98,7 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
                 id: uuid.v4().toString(),
                 name: text
             }
-            let save = await Mangas.SaveMangasToSearch(manga);
+            let save = await MangasToSearch.Save(manga);
             if (save) {
                 Alert.alert('Success!!!', 'Successfully registered!', [
                     {

@@ -1,9 +1,10 @@
 import React from 'react';
-import * as Animes from '../../services/Animes';
 import uuid from 'react-native-uuid';
 import {ActivityIndicator, Alert, Button, TextInput} from "react-native";
 import {Picker} from '@react-native-picker/picker';
 import {Container, Divider, Paper} from "../../components/Views";
+
+import * as AnimesService from '../../services/Animes';
 
 import {RootStackScreenProps} from "../../../types/ReactNavigation";
 import {WebsitesProps} from "../../../types/Pages";
@@ -49,7 +50,7 @@ export default function AddAnimes({navigation}: RootStackScreenProps<'AddAnimes'
             isFavorite: false
         };
 
-        let exist = await Animes.Exists(text, type);
+        let exist = await AnimesService.Exists(text, type);
         if (exist) {
             Alert.alert('Error!!!', 'Already registered!', [
                 {
@@ -61,7 +62,7 @@ export default function AddAnimes({navigation}: RootStackScreenProps<'AddAnimes'
             return;
         }
 
-        let save = await Animes.Save(site, type);
+        let save = await AnimesService.Save(site, type);
         if (save) {
             Alert.alert('Success!!!', 'Successfully registered', [
                 {

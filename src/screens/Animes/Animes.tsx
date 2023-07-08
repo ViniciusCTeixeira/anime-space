@@ -1,11 +1,13 @@
-import {RootTabScreenProps} from "../../../types/ReactNavigation";
 import {ActivityIndicator, Alert, View} from "react-native";
 import React, {useEffect, useState} from "react";
-import {WebsitesProps} from "../../../types/Pages";
 import {useIsFocused} from "@react-navigation/native";
-import * as AnimesService from "../../services/Animes";
-import {Container, Divider, PagesList, Paper} from "../../components/Views";
 import {Picker} from "@react-native-picker/picker";
+import {Container, Divider, PagesList, Paper} from "../../components/Views";
+
+import * as AnimesService from "../../services/Animes";
+
+import {WebsitesProps} from "../../../types/Pages";
+import {RootTabScreenProps} from "../../../types/ReactNavigation";
 
 export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
     const [pages, setPages] = useState<WebsitesProps[]>([]);

@@ -26,13 +26,21 @@ export async function WebsiteInfo(urlString: string) {
         const titleStartIndex = html.indexOf('<title>') + 7;
         const titleEndIndex = html.indexOf('</title>');
 
-        let websiteTitle = html.slice(titleStartIndex, titleEndIndex);
+        let websiteTitle: string = html.slice(titleStartIndex, titleEndIndex);
         websiteTitle = websiteTitle.split('-')[0].trim().split('|')[0].trim().split(':')[0].trim().split('&#8211;')[0].trim();
         websiteTitle = websiteTitle.replace(/(\s\(.*?\))|<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
 
         // Extract icon
-        const gstatic = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
-        const websiteIcon = await urlToBase64(gstatic) ?? gstatic;
+        const gstatic: string = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
+        const websiteIconBase64 = await urlToBase64(gstatic);
+        let websiteIcon: string
+
+        if (typeof websiteIconBase64 === 'string') {
+            websiteIcon = websiteIconBase64;
+        }else{
+            websiteIcon = gstatic;
+        }
+
 
         return { title: websiteTitle, icon: websiteIcon };
     } catch (message: any) {
@@ -43,7 +51,7 @@ export async function WebsiteInfo(urlString: string) {
 
 export async function urlToBase64(urlString: string) {
     try {
-        const toDataURL = await fetch(urlString)
+        let base64 = await fetch(urlString)
             .then(response => response.blob())
             .then(blob => new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -52,7 +60,11 @@ export async function urlToBase64(urlString: string) {
                 reader.readAsDataURL(blob);
             }));
 
-        return toDataURL;
+        if (typeof base64 === 'string') {
+            return base64 ?? "";
+        }
+
+        return "";
 
     } catch (message: any) {
         console.log(message);

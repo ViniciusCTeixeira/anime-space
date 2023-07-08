@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, Alert, Dimensions, View} from "react-native";
-import {RootTabScreenProps} from '../../../types/ReactNavigation';
-import {Container, Divider, Paper, PagesList, MangasToSearchList} from "../../components/Views";
+import {ActivityIndicator, Alert, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {Picker} from "@react-native-picker/picker";
+import {Container, Divider, Paper, PagesList, MangasToSearchList} from "../../components/Views";
 
 import * as MangasService from '../../services/Mangas';
+import * as MangasToSearchService from '../../services/MangasToSearch';
 
 import {MangasToSearchProps, WebsitesProps} from "../../../types/Pages";
+import {RootTabScreenProps} from '../../../types/ReactNavigation';
 
 export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
     const [pages, setPages] = useState<WebsitesProps[]>([]);
@@ -54,7 +55,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
             Alert.alert('Delete', 'Do you really want to delete the record?', [
                 {
                     text: 'OK', onPress: () => {
-                        MangasService.DeleteMangasToSearch(item).then((res) => {
+                        MangasToSearchService.Delete(item).then((res) => {
                             if (res) {
                                 setMangasToSearch((current) =>
                                     current.filter((itens) => itens.id !== item.id)
@@ -73,7 +74,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
 
     const loadItens = () => {
         if(type == 2){
-            MangasService.GetMangasToSearch().then((r) => {
+            MangasToSearchService.Get().then((r) => {
                 setMangasToSearch(r);
             }).catch((err) => {
                 Alert.alert('Error!!!', 'Couldn\'t load', [
