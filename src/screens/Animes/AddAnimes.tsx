@@ -96,8 +96,8 @@ export default function AddAnimes({navigation}: RootStackScreenProps<'AddAnimes'
                             style={{color: "white"}}
                             dropdownIconColor={"white"}
                         >
-                            <Picker.Item label="Anime Website" value="0"/>
-                            <Picker.Item label="Anime Page" value="1"/>
+                            <Picker.Item label="Website" value="0"/>
+                            <Picker.Item label="Anime" value="1"/>
                         </Picker>
                         <Divider style={{marginBottom: 15}}/>
                         <TextInput

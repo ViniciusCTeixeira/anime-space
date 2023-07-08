@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {ActivityIndicator, Alert, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {Picker} from "@react-native-picker/picker";
-import {Container, Divider, Paper, PagesList, MangasToSearchList} from "../../components/Views";
+import {Container, Divider, Paper, WebsitesList, MangasToSearchList} from "../../components/Views";
 
 import * as MangasService from '../../services/Mangas';
 import * as MangasToSearchService from '../../services/MangasToSearch';
@@ -13,7 +13,7 @@ import {RootTabScreenProps} from '../../../types/ReactNavigation';
 export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
     const [pages, setPages] = useState<WebsitesProps[]>([]);
     const [mangasToSearch, setMangasToSearch] = useState<MangasToSearchProps[]>([]);
-    const [type, onChangeType] = React.useState<number>(0);
+    const [type, setType] = React.useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
     const isFocused = useIsFocused();
@@ -111,7 +111,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
                 <Picker
                     selectedValue={type}
                     onValueChange={(itemValue, itemIndex) => {
-                        onChangeType(itemValue)
+                        setType(itemValue)
                     }}
                     style={{color: "white"}}
                     dropdownIconColor={"white"}
@@ -127,7 +127,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
                             ? <ActivityIndicator size="large"/>
                             : type == 2
                                 ? <MangasToSearchList pages={mangasToSearch} navigation={navigation} deleteItem={deleteMangasToSearch} />
-                                : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess}/>
+                                : <WebsitesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess}/>
                     }
                 </View>
             </Paper>

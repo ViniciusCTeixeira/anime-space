@@ -1,15 +1,15 @@
-import {ActivityIndicator, Alert, View} from "react-native";
-import React, {useEffect, useState} from "react";
-import {useIsFocused} from "@react-navigation/native";
-import {Picker} from "@react-native-picker/picker";
-import {Container, Divider, PagesList, Paper} from "../../components/Views";
+import { ActivityIndicator, Alert, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
+import { Container, Divider, WebsitesList, Paper } from "../../components/Views";
 
 import * as AnimesService from "../../services/Animes";
 
-import {WebsitesProps} from "../../../types/Pages";
-import {RootTabScreenProps} from "../../../types/ReactNavigation";
+import { WebsitesProps } from "../../../types/Pages";
+import { RootTabScreenProps } from "../../../types/ReactNavigation";
 
-export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
+export default function Animes({ navigation }: RootTabScreenProps<'Animes'>) {
     const [pages, setPages] = useState<WebsitesProps[]>([]);
     const [type, onChangeType] = React.useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
@@ -74,19 +74,18 @@ export default function Animes({navigation}: RootTabScreenProps<'Animes'>) {
                     onValueChange={(itemValue, itemIndex) => {
                         onChangeType(itemValue)
                     }}
-                    style={{color: "white"}}
+                    style={{ color: "white" }}
                     dropdownIconColor={"white"}
                 >
-                    <Picker.Item label="Websites" value="0"/>
-                    <Picker.Item label="Animes" value="1"/>
+                    <Picker.Item label="Websites" value="0" />
+                    <Picker.Item label="Animes" value="1" />
                 </Picker>
-                <Divider style={{marginBottom: 15}}/>
-                <View style={{flex: 1, justifyContent: "space-between", alignItems: "center"}}>
+                <Divider style={{ marginBottom: 15 }} />
+                <View style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}>
                     {
                         loading
-                            ? <ActivityIndicator size="large"/>
-                            : <PagesList pages={pages} navigation={navigation} deleteItem={deleteItem}
-                                         updateLastAcess={updateLastAcess}/>
+                            ? <ActivityIndicator size="large" />
+                            : <WebsitesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess} />
                     }
                 </View>
             </Paper>

@@ -132,9 +132,9 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
                             style={{color: "white"}}
                             dropdownIconColor={"white"}
                         >
-                            <Picker.Item label="Manga Website" value="0"/>
-                            <Picker.Item label="Manga Page" value="1"/>
-                            <Picker.Item label="Manga To Search" value="2"/>
+                            <Picker.Item label="Website" value="0"/>
+                            <Picker.Item label="Manga" value="1"/>
+                            <Picker.Item label="To Search" value="2"/>
                         </Picker>
                         <Divider style={{marginBottom: 15}}/>
                         <TextInput

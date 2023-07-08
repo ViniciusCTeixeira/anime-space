@@ -32,7 +32,7 @@ export async function WebsiteInfo(urlString: string) {
 
         // Extract icon
         const gstatic: string = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
-        const websiteIconBase64 = await urlToBase64(gstatic);
+        const websiteIconBase64 = await UrlToBase64(gstatic);
         let websiteIcon: string
 
         if (typeof websiteIconBase64 === 'string') {
@@ -49,7 +49,7 @@ export async function WebsiteInfo(urlString: string) {
     }
 }
 
-export async function urlToBase64(urlString: string) {
+export async function UrlToBase64(urlString: string) {
     try {
         let base64 = await fetch(urlString)
             .then(response => response.blob())
@@ -71,3 +71,12 @@ export async function urlToBase64(urlString: string) {
         return;
     }
 }
+
+export function CalcNumColumns(width: number, itemWisth: number, itemMargin: number) {
+    const cols = width / itemWisth;
+    const colsFloor = Math.floor(cols) > 2 ? Math.floor(cols) : 2;
+    const colsMinusMargin = cols - (2 * colsFloor * itemMargin);
+    if (colsMinusMargin < colsFloor && colsFloor > 2) {
+      return colsFloor - 1;
+    } else return colsFloor;
+  };
