@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types/ReactNavigation';
 
+import { WebviewSaveLink } from '../resources/constants';
+
 import NotFound from './screens/NotFound';
 import Mangas from './screens/Mangas/Mangas';
 import Animes from './screens/Animes/Animes';
@@ -40,42 +42,10 @@ function Navigator() {
 function BottomTabNavigator() {
     const BottomTab = createBottomTabNavigator<RootTabParamList>();
     const HeaderRight = (navigation: any, page: 1 | 2 ) => {
-        const script = `
-            const createButton = document.createElement('button');
-            createButton.innerText = '❤️';
-            createButton.style.position = 'fixed';
-            createButton.style.bottom = '20px';
-            createButton.style.right = '30px';
-            createButton.style.zIndex = '9999';
-            createButton.style.border = 'none';
-            createButton.style.outline = 'none';
-            createButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
-            createButton.style.color = 'white';
-            createButton.style.padding = '10px';
-            createButton.style.borderRadius = '10px';
-            createButton.style.fontSize = '25px';
-            
-            createButton.addEventListener('click', function handleClick(event) {
-                var dummy = document.createElement('input'),
-                text = window.location.href;
-                document.body.appendChild(dummy);
-                dummy.value = text;
-                dummy.select();
-                if(document.execCommand('copy')){
-                    window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "URL copied successfully"}));
-                }else{
-                    window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "Unable to copy URL"}));
-                }
-                document.body.removeChild(dummy);
-            });
-            
-            document.body.appendChild(createButton);
-            true;
-        `;
         return (
             <View style={{flexDirection: "row"}}>
                 <Pressable
-                    onPress={() => navigation.navigate({name: 'WebView', params: {url: "https://www.google.com/", title: "Search", script: script}})}
+                    onPress={() => navigation.navigate({name: 'WebView', params: {url: "https://www.google.com/", title: "Search", script: WebviewSaveLink}})}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10
