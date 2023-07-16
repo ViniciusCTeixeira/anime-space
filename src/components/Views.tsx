@@ -6,7 +6,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MangasToSearchProps, WebsitesProps } from "../../types/Pages";
 
 import { CalcNumColumns } from "../../resources/Tools"
-import { WebviewSaveLink } from "../../resources/constants";
+import { WebviewSaveLink, WebviewTooKit } from "../../resources/constants";
 
 export function Container(props: DefaultView['props']) {
     const { style, ...others } = props;
@@ -47,9 +47,10 @@ export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, d
                 <TouchableOpacity
                     onPress={() => {
                         props.updateLastAcess(item);
+                        const script = WebviewTooKit.replace("#d#", item.url)
                         props.navigation.navigate({
                             name: 'WebView',
-                            params: { url: item.url, title: item.name }
+                            params: { url: item.url, title: item.name, script: WebviewTooKit }
                         })
                     }}
                     style={{
