@@ -1,26 +1,25 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DarkTheme, NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import 'react-native-gesture-handler';
+import { Appbar, Menu, BottomNavigation } from 'react-native-paper';
+import { getHeaderTitle } from '@react-navigation/elements';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { Feather } from "@expo/vector-icons";
 
-import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types/ReactNavigation';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types/ReactNavigation';
 
 import { WebviewSaveLink } from '../resources/constants';
 
 import NotFound from './screens/NotFound';
 import Mangas from './screens/Mangas/Mangas';
 import Animes from './screens/Animes/Animes';
-import AddMangas from "./screens/Mangas/AddMangas";
-import AddAnimes from "./screens/Animes/AddAnimes";
-import {Pressable, View} from "react-native";
-import {Feather, FontAwesome} from "@expo/vector-icons";
 import WebView from "./screens/WebView";
-
 
 export default function Navigation() {
     return (
-        <NavigationContainer theme={DarkTheme}>
-            <Navigator/>
+        <NavigationContainer>
+            <Navigator />
         </NavigationContainer>
     );
 }
@@ -29,77 +28,105 @@ function Navigator() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
 
     return (
-        <Stack.Navigator initialRouteName="Root">
-            <Stack.Screen name="Root" component={BottomTabNavigator} options={{headerShown: false}}/>
-            <Stack.Screen name="AddAnimes" component={AddAnimes} options={{title: 'Add Animes'}}/>
-            <Stack.Screen name="AddMangas" component={AddMangas} options={{title: 'Add Mangas'}}/>
-            <Stack.Screen name="WebView" component={WebView} options={({ route }) => ({ title: route.params.title })}/>
-            <Stack.Screen name="NotFound" component={NotFound} options={{title: 'Oops!'}}/>
+        <Stack.Navigator initialRouteName="Root" screenOptions={{ header: (props) => <CustomNavigationBar navigation={props.navigation} route={props.route} options={props.options} back={true} />, }}>
+            <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="WebView" component={WebView} options={({ route }) => ({ title: route.params.title })} />
+            <Stack.Screen name="NotFound" component={NotFound} options={{ title: 'Oops!' }} />
         </Stack.Navigator>
     );
 }
 
 function BottomTabNavigator() {
     const BottomTab = createBottomTabNavigator<RootTabParamList>();
-    const HeaderRight = (navigation: any, page: 1 | 2 ) => {
-        return (
-            <View style={{flexDirection: "row"}}>
-                <Pressable
-                    onPress={() => navigation.navigate({name: 'WebView', params: {url: "https://www.google.com/", title: "Search", script: WebviewSaveLink}})}
-                    style={({pressed}) => ({
-                        opacity: pressed ? 0.5 : 1,
-                        marginRight: 10
-                    })}>
-                    <FontAwesome
-                        name="search"
-                        size={25}
-                        color={"#fff"}
-                        style={{marginRight: 15}}
-                    />
-                </Pressable>
-                <Pressable
-                    onPress={() => (page == 1 ? navigation.navigate('AddMangas') : navigation.navigate('AddAnimes'))}
-                    style={({pressed}) => ({
-                        opacity: pressed ? 0.5 : 1,
-                    })}>
-                    <FontAwesome
-                        name="plus-circle"
-                        size={25}
-                        color={"#fff"}
-                        style={{marginRight: 15}}
-                    />
-                </Pressable>
-            </View>
-        );
-    }
 
     return (
-        <BottomTab.Navigator initialRouteName="Mangas" screenOptions={{
-            tabBarActiveTintColor: "#42a5f5",
-            tabBarInactiveTintColor: "rgba(255, 255, 255, 0.3)"
-        }}>
+        <BottomTab.Navigator
+            initialRouteName="Mangas"
+            screenOptions={{tabBarStyle:{height:1}}}
+            tabBar={({ navigation, state, descriptors, insets }) => (
+                <BottomNavigation.Bar
+                    navigationState={state}
+                    safeAreaInsets={insets}
+                    onTabPress={({ route }) => {
+                        navigation.navigate(route.name, route.params)
+                    }}
+                    renderIcon={({ route, focused, color }) => {
+                        const { options } = descriptors[route.key];
+                        if (options.tabBarIcon) {
+                            return options.tabBarIcon({ focused, color, size: 24 });
+                        }
+
+                        return null;
+                    }}
+                    getLabelText={({ route }) => {
+                        const { options } = descriptors[route.key];
+                        return getHeaderTitle(options, route.name);;
+                    }}
+                />
+            )}
+        >
             <BottomTab.Screen
                 name="Mangas"
                 component={Mangas}
-                options={({navigation}: RootTabScreenProps<'Mangas'>) => ({
+                options={({ navigation }: RootTabScreenProps<'Mangas'>) => ({
                     title: 'Mangas',
-                    headerTitleStyle: {color: "#fff"},
-                    tabBarIcon: ({color}) => <Feather size={30} style={{marginBottom: -3}} name="book-open" color={color}/>,
-                    tabBarStyle: {paddingBottom: 5},
-                    headerRight: () => HeaderRight(navigation, 1)
+                    header: (props) => <CustomNavigationBar navigation={navigation} route={props.route} options={props.options} back={false} />,
+                    tabBarIcon: ({ color, size }) => {
+                        return <Feather size={size} name="book-open" color={color} />;
+                    }
                 })}
             />
             <BottomTab.Screen
                 name="Animes"
                 component={Animes}
-                options={({navigation}: RootTabScreenProps<'Animes'>) => ({
+                options={({ navigation }: RootTabScreenProps<'Animes'>) => ({
                     title: 'Animes',
-                    headerTitleStyle: {color: "#fff"},
-                    tabBarIcon: ({color}) => <FontAwesome size={30} style={{marginBottom: -3}} name="tv" color={color}/>,
-                    tabBarStyle: {paddingBottom: 5},
-                    headerRight: () => HeaderRight(navigation, 2)
+                    header: (props) => <CustomNavigationBar navigation={navigation} route={props.route} options={props.options} back={false} />,
+                    tabBarIcon: ({ color, size }) => {
+                        return <Feather size={size} name="tv" color={color} />;
+                    }
                 })}
             />
         </BottomTab.Navigator>
+    );
+}
+
+function CustomNavigationBar(props: { route: any, options: any, navigation: any, back: boolean }) {
+    const [visible, setVisible] = React.useState(false);
+
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
+
+    const title = getHeaderTitle(props.options, props.route.name);
+
+    return (
+        <Appbar.Header>
+            {props.back ? <Appbar.BackAction onPress={props.navigation.goBack} /> : null}
+            <Appbar.Content title={title} />
+            {!props.back ? (
+                <Menu
+                    visible={visible}
+                    onDismiss={closeMenu}
+                    anchor={
+                        <Appbar.Action
+                            icon="dots-vertical"
+                            onPress={openMenu}
+                        />
+                    }>
+                    <Menu.Item
+                        onPress={() => props.navigation.navigate({ name: 'WebView', params: { url: "https://www.google.com/", title: "Search", script: WebviewSaveLink } })}
+                        title="Search"
+                        leadingIcon="web"
+                    />
+                    <Menu.Item
+                        onPress={() => {
+                            console.log('Option 2 was pressed');
+                        }}
+                        title="Search"
+                        leadingIcon="web"
+                    />
+                </Menu>
+            ) : null}
+        </Appbar.Header>
     );
 }

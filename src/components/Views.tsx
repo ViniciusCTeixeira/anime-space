@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Dimensions, FlatList, Image, Text, TouchableOpacity, View, View as DefaultView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 

@@ -1,6 +1,5 @@
-import {StatusBar} from 'expo-status-bar';
-import {Platform} from "react-native";
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import * as React from 'react';
+import { PaperProvider } from 'react-native-paper';
 
 import {CachedResources} from "../resources/LoadToCache";
 
@@ -14,10 +13,9 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
+        <PaperProvider>
             <Navigation/>
-            <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'}/>
-        </SafeAreaProvider>
+        </PaperProvider>
     );
 }
 
