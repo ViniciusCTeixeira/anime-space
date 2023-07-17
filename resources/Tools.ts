@@ -72,8 +72,8 @@ export async function UrlToBase64(urlString: string) {
     }
 }
 
-export function CalcNumColumns(width: number, itemWisth: number, itemMargin: number) {
-    const cols = width / itemWisth;
+export function CalcNumColumns(width: number, itemWidth: number, itemMargin: number) {
+    const cols = width / itemWidth;
     const colsFloor = Math.floor(cols) > 2 ? Math.floor(cols) : 2;
     const colsMinusMargin = cols - (2 * colsFloor * itemMargin);
     if (colsMinusMargin < colsFloor && colsFloor > 2) {

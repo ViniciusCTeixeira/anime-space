@@ -16,9 +16,9 @@ import Mangas from './screens/Mangas/Mangas';
 import Animes from './screens/Animes/Animes';
 import WebView from "./screens/WebView";
 
-export default function Navigation() {
+export default function Navigation(props: {theme: any}) {
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={props.theme}>
             <Navigator />
         </NavigationContainer>
     );
@@ -51,16 +51,16 @@ function BottomTabNavigator() {
                         navigation.navigate(route.name, route.params)
                     }}
                     renderIcon={({ route, focused, color }) => {
-                        const { options } = descriptors[route.key];
-                        if (options.tabBarIcon) {
-                            return options.tabBarIcon({ focused, color, size: 24 });
+                        const { options: {tabBarIcon} } = descriptors[route.key];
+                        if (tabBarIcon) {
+                            return tabBarIcon({ focused, color, size: 24 });
                         }
 
                         return null;
                     }}
                     getLabelText={({ route }) => {
                         const { options } = descriptors[route.key];
-                        return getHeaderTitle(options, route.name);;
+                        return getHeaderTitle(options, route.name);
                     }}
                 />
             )}
@@ -92,11 +92,7 @@ function BottomTabNavigator() {
 }
 
 function CustomNavigationBar(props: { route: any, options: any, navigation: any, back: boolean }) {
-    const [visible, setVisible] = React.useState(false);
-
-    const openMenu = () => setVisible(true);
-    const closeMenu = () => setVisible(false);
-
+    const [visible, setVisible] = React.useState<boolean>(false);
     const title = getHeaderTitle(props.options, props.route.name);
 
     return (
@@ -106,24 +102,28 @@ function CustomNavigationBar(props: { route: any, options: any, navigation: any,
             {!props.back ? (
                 <Menu
                     visible={visible}
-                    onDismiss={closeMenu}
+                    onDismiss={() => setVisible(false)}
                     anchor={
                         <Appbar.Action
                             icon="dots-vertical"
-                            onPress={openMenu}
+                            onPress={() => setVisible(true)}
                         />
                     }>
                     <Menu.Item
-                        onPress={() => props.navigation.navigate({ name: 'WebView', params: { url: "https://www.google.com/", title: "Search", script: WebviewSaveLink } })}
+                        onPress={() => {
+                            props.navigation.navigate({ name: 'WebView', params: { url: "https://www.google.com/", title: "Search", script: WebviewSaveLink } })
+                            setVisible(false)
+                        }}
                         title="Search"
                         leadingIcon="web"
                     />
                     <Menu.Item
                         onPress={() => {
                             console.log('Option 2 was pressed');
+                            setVisible(false)
                         }}
-                        title="Search"
-                        leadingIcon="web"
+                        title="Add"
+                        leadingIcon="plus"
                     />
                 </Menu>
             ) : null}

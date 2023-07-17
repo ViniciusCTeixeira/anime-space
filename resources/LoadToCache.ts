@@ -15,11 +15,6 @@ export function CachedResources() {
                 'roboto': require('../assets/fonts/Roboto-Regular.ttf'),
             });
 
-            if (Platform.OS !== 'ios') {
-                await NavigationBar.setVisibilityAsync("hidden");
-                await NavigationBar.setBehaviorAsync("overlay-swipe");
-            }
-
         } catch (e) {
             console.warn(e);
         } finally {

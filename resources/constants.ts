@@ -19,11 +19,6 @@ createButton.addEventListener('click', function handleClick(event) {
     document.body.appendChild(dummy);
     dummy.value = text;
     dummy.select();
-    if(document.execCommand('copy')){
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "URL copied successfully"}));
-    }else{
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "Unable to copy URL"}));
-    }
     document.body.removeChild(dummy);
 });
 
@@ -169,11 +164,6 @@ linkButton.addEventListener('click', function handleClick(event) {
     document.body.appendChild(dummy);
     dummy.value = text;
     dummy.select();
-    if(document.execCommand('copy')){
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "URL copied successfully"}));
-    }else{
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 1, msg : "Unable to copy URL"}));
-    }
     document.body.removeChild(dummy);
 });
 

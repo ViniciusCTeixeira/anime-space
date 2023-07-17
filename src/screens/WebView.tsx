@@ -19,19 +19,13 @@ export default function WebView({ route, navigation }: RootStackScreenProps<'Web
                 injectedJavaScript={script}
                 onLoadStart={() => setLoading(true)}
                 onLoadEnd={() => setLoading(false)}
-                onMessage={(event) => {
-                    const data = JSON.parse(event.nativeEvent.data);
-                    if (data.type == 1) {
-                        alert(data.msg);
-                    }
-                }}
                 allowsBackForwardNavigationGestures={true}
             />
             {loading &&
                 <ActivityIndicator
                     color='purple'
                     size={100}
-                    style={{ height: ScreenHeight, width: ScreenWidth, position: "absolute" }}
+                    style={{ height: ScreenHeight, width: ScreenWidth, position: "absolute", backgroundColor: "rgba(79,79,79,0.5)" }}
                 />
             }
         </>

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { Button, Dialog, Portal } from 'react-native-paper';
 import {ActivityIndicator, Alert, View} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {Picker} from "@react-native-picker/picker";
@@ -18,15 +19,11 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
 
     const isFocused = useIsFocused();
 
-    const updateLastAcess = (item: WebsitesProps) => {
-        setLoading(true);
-        if(type !== 2) {
-            MangasService.UpdateLastAcess(item, type).then();
-        }
-        setLoading(false);
+    const updateLastAccess = (item: WebsitesProps) => {
+        MangasService.UpdateLastAcess(item, type).then();
     }
 
-    const deleteItem = (item: WebsitesProps) => {
+    const deleteWebsiteOrManga = (item: WebsitesProps) => {
         setLoading(true);
         if(type !== 2) {
             Alert.alert('Delete', 'Do you really want to delete the record?', [
@@ -127,7 +124,7 @@ export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
                             ? <ActivityIndicator size="large"/>
                             : type == 2
                                 ? <MangasToSearchList pages={mangasToSearch} navigation={navigation} deleteItem={deleteMangasToSearch} />
-                                : <WebsitesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess}/>
+                                : <WebsitesList pages={pages} navigation={navigation} deleteItem={deleteWebsiteOrManga} updateLastAcess={updateLastAccess}/>
                     }
                 </View>
             </Paper>
