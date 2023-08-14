@@ -3,7 +3,7 @@ import * as React from "react";
 import { Dimensions, FlatList, Image, Text, TouchableOpacity, View, View as DefaultView } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { MangasToSearchProps, WebsitesProps } from "../../types/Pages";
+import { ToSearchProps, WebsitesProps } from "../../types/Pages";
 
 import { CalcNumColumns } from "../../resources/Tools"
 import { WebviewSaveLink, WebviewTooKit } from "../../resources/constants";
@@ -142,7 +142,7 @@ export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, d
     )
 }
 
-export function MangasToSearchList(props: { pages: MangasToSearchProps[], navigation: any, deleteItem: any }) {
+export function MangasToSearchList(props: { pages: ToSearchProps[], navigation: any, deleteItem: any }) {
     const ScreenWidth = Dimensions.get("window").width;
     const FlatListItemWidth = 150;
     const FlatListItemMargin = 5;

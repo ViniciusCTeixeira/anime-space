@@ -17,6 +17,7 @@ export type RootStackParamList = {
 export type RootTabParamList = {
   Mangas: undefined;
   Animes: undefined;
+  ToSearch: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

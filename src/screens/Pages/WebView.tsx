@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Dimensions, ActivityIndicator, View } from "react-native";
-import { WebView as ReactNativeWebview } from 'react-native-webview';
+import {Dimensions} from "react-native";
+import {ActivityIndicator} from 'react-native-paper';
+import {WebView as ReactNativeWebview} from 'react-native-webview';
 
-import { RootStackScreenProps } from "../../types/ReactNavigation";
+import {RootStackScreenProps} from "../../../types/ReactNavigation";
 
-export default function WebView({ route, navigation }: RootStackScreenProps<'WebView'>) {
+export default function WebView({route, navigation}: RootStackScreenProps<'WebView'>) {
     const script = route.params.script ? route.params.script : ``;
     const ScreenWidth = Dimensions.get("window").width;
     const ScreenHeight = Dimensions.get("window").height;
@@ -14,8 +15,8 @@ export default function WebView({ route, navigation }: RootStackScreenProps<'Web
     return (
         <>
             <ReactNativeWebview
-                style={{ flex: 1 }}
-                source={{ uri: route.params.url }}
+                style={{flex: 1}}
+                source={{uri: route.params.url}}
                 injectedJavaScript={script}
                 onLoadStart={() => setLoading(true)}
                 onLoadEnd={() => setLoading(false)}
@@ -25,7 +26,12 @@ export default function WebView({ route, navigation }: RootStackScreenProps<'Web
                 <ActivityIndicator
                     color='purple'
                     size={100}
-                    style={{ height: ScreenHeight, width: ScreenWidth, position: "absolute", backgroundColor: "rgba(79,79,79,0.5)" }}
+                    style={{
+                        height: ScreenHeight,
+                        width: ScreenWidth,
+                        position: "absolute",
+                        backgroundColor: "rgba(79,79,79,0.5)"
+                    }}
                 />
             }
         </>

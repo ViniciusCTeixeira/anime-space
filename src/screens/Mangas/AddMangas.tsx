@@ -5,10 +5,10 @@ import {Picker} from '@react-native-picker/picker';
 import {Container, Divider, Paper} from "../../components/Views";
 
 import * as MangasService from '../../services/Mangas';
-import * as MangasToSearch from '../../services/MangasToSearch';
+import * as MangasToSearch from '../../services/ToSearch';
 
 import {RootStackScreenProps} from "../../../types/ReactNavigation";
-import {MangasToSearchProps, WebsitesProps} from "../../../types/Pages";
+import {ToSearchProps, WebsitesProps} from "../../../types/Pages";
 
 import {ValidUrl, WebsiteInfo} from "../../../resources/Tools";
 
@@ -94,7 +94,7 @@ export default function AddMangas({navigation}: RootStackScreenProps<'AddMangas'
                 return
             }
 
-            let manga: MangasToSearchProps = {
+            let manga: ToSearchProps = {
                 id: uuid.v4().toString(),
                 name: text
             }

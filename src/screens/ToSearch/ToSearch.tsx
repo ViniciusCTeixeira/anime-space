@@ -11,7 +11,7 @@ import * as MangasToSearchService from '../../services/ToSearch';
 import {ToSearchProps, WebsitesProps} from "../../../types/Pages";
 import {RootTabScreenProps} from '../../../types/ReactNavigation';
 
-export default function Mangas({navigation}: RootTabScreenProps<'Mangas'>) {
+export default function toSearch({navigation}: RootTabScreenProps<'Mangas'>) {
     const isFocused = useIsFocused();
     const [type, setType] = React.useState<number>(1);
     const [loading, setLoading] = useState<boolean>(true);

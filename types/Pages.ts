@@ -7,7 +7,7 @@ export type WebsitesProps = {
     lastAcess?: string
 };
 
-export type MangasToSearchProps = {
+export type ToSearchProps = {
     id: string;
     name: string;
 }

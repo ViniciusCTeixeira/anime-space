@@ -11,10 +11,11 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 
 import { WebviewSaveLink } from '../resources/constants';
 
-import NotFound from './screens/NotFound';
+import NotFound from './screens/Pages/NotFound';
 import Mangas from './screens/Mangas/Mangas';
 import Animes from './screens/Animes/Animes';
-import WebView from "./screens/WebView";
+import ToSearch from './screens/ToSearch/ToSearch';
+import WebView from "./screens/Pages/WebView";
 
 export default function Navigation(props: {theme: any}) {
     return (
@@ -81,6 +82,17 @@ function BottomTabNavigator() {
                 component={Animes}
                 options={({ navigation }: RootTabScreenProps<'Animes'>) => ({
                     title: 'Animes',
+                    header: (props) => <CustomNavigationBar navigation={navigation} route={props.route} options={props.options} back={false} />,
+                    tabBarIcon: ({ color, size }) => {
+                        return <Feather size={size} name="tv" color={color} />;
+                    }
+                })}
+            />
+            <BottomTab.Screen
+                name="ToSearch"
+                component={ToSearch}
+                options={({ navigation }: RootTabScreenProps<'ToSearch'>) => ({
+                    title: 'ToSearch',
                     header: (props) => <CustomNavigationBar navigation={navigation} route={props.route} options={props.options} back={false} />,
                     tabBarIcon: ({ color, size }) => {
                         return <Feather size={size} name="tv" color={color} />;
