@@ -10,26 +10,44 @@ import { WebsitesProps } from "../../../types/Pages";
 import { RootTabScreenProps } from "../../../types/ReactNavigation";
 
 export default function Animes({ navigation }: RootTabScreenProps<'Animes'>) {
-    const [pages, setPages] = useState<WebsitesProps[]>([]);
+    const isFocused = useIsFocused();
     const [type, onChangeType] = React.useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const isFocused = useIsFocused();
+    const [websites, setWebsites] = useState<WebsitesProps[]>([]);
 
-    const updateLastAcess = (item: WebsitesProps) => {
+    const getWebsites = () => {
         setLoading(true);
-        AnimesService.UpdateLastAcess(item, type).then();
-        setLoading(false);
+
+        AnimesService.Get(type).then((r) => {
+            setWebsites(r);
+        }).catch((err) => {
+            Alert.alert('Error!!!', 'Couldn\'t load', [
+                {
+                    text: 'OK', onPress: () => {
+                    }
+                },
+            ]);
+        }).finally(() => setLoading(false))
     }
 
-    const deleteItem = (item: WebsitesProps) => {
+    const updateFavorite = (item: WebsitesProps) => {
+        setLoading(true)
+        AnimesService.updateFavorite(item, type).then(() => {item.isFavorite = !item.isFavorite; setLoading(false)});
+    }
+
+    const updateLastAccess = (item: WebsitesProps) => {
+        AnimesService.updateLastAccess(item, type).then();
+    }
+
+    const deleteWebsiteOrAnime = (item: WebsitesProps) => {
         setLoading(true);
         Alert.alert('Delete', 'Do you really want to delete the record?', [
             {
                 text: 'OK', onPress: () => {
                     AnimesService.Delete(item, type).then((res) => {
                         if (res) {
-                            setPages((current) =>
+                            setWebsites((current) =>
                                 current.filter((itens) => itens.id !== item.id)
                             );
                         }
@@ -44,26 +62,9 @@ export default function Animes({ navigation }: RootTabScreenProps<'Animes'>) {
         setLoading(false);
     }
 
-    const loadItens = () => {
-        AnimesService.Get(type).then((r) => {
-            setPages(r);
-        }).catch((err) => {
-            Alert.alert('Error!!!', 'Couldn\'t load', [
-                {
-                    text: 'OK', onPress: () => {
-                    }
-                },
-            ]);
-        }).finally(() => setLoading(false))
-    }
-
     useEffect(() => {
         if (!isFocused) return;
-
-        setLoading(true);
-        setPages([]);
-
-        loadItens();
+        getWebsites()
     }, [isFocused, type]);
 
     return (
@@ -85,7 +86,7 @@ export default function Animes({ navigation }: RootTabScreenProps<'Animes'>) {
                     {
                         loading
                             ? <ActivityIndicator size="large" />
-                            : <WebsitesList pages={pages} navigation={navigation} deleteItem={deleteItem} updateLastAcess={updateLastAcess} />
+                            : <WebsitesList pages={websites} navigation={navigation} deleteItem={deleteWebsiteOrAnime} updateLastAccess={updateLastAccess} updateFavorite={updateFavorite} />
                     }
                 </View>
             </Paper>

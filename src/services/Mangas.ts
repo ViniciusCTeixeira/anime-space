@@ -56,7 +56,26 @@ export async function Update(site: WebsitesProps, type: number) {
     }
 }
 
-export async function UpdateLastAcess(site: WebsitesProps, type: number) {
+export async function updateFavorite(site: WebsitesProps, type: number) {
+    try {
+        let key  = type == 0 ? "@mangas" : "@mangaWebsites";
+
+        let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
+        let indexToUpdate = sites.findIndex(item => item.id === site.id);
+
+        if (indexToUpdate === -1) {
+            return false;
+        }
+
+        sites[indexToUpdate]['isFavorite'] = !sites[indexToUpdate]['isFavorite'];
+        await AsyncStorage.setItem(key, JSON.stringify(sites))
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+export async function updateLastAccess(site: WebsitesProps, type: number) {
     try {
         let key  = type == 0 ? "@mangas" : "@mangaWebsites";
 

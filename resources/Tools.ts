@@ -41,11 +41,10 @@ export async function WebsiteInfo(urlString: string) {
             websiteIcon = gstatic;
         }
 
-
         return { title: websiteTitle, icon: websiteIcon };
     } catch (message: any) {
         console.log(message);
-        return;
+        return { title: '', icon: '' };
     }
 }
 
@@ -65,7 +64,6 @@ export async function UrlToBase64(urlString: string) {
         }
 
         return "";
-
     } catch (message: any) {
         console.log(message);
         return;
@@ -79,4 +77,4 @@ export function CalcNumColumns(width: number, itemWidth: number, itemMargin: num
     if (colsMinusMargin < colsFloor && colsFloor > 2) {
       return colsFloor - 1;
     } else return colsFloor;
-  };
+}

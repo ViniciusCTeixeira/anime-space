@@ -9,7 +9,7 @@ import { Feather } from "@expo/vector-icons";
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types/ReactNavigation';
 
-import { WebviewSaveLink } from '../resources/constants';
+import {WebviewSaveLink, WebviewTooKit} from '../resources/constants';
 
 import NotFound from './screens/Pages/NotFound';
 import Mangas from './screens/Mangas/Mangas';
@@ -92,7 +92,7 @@ function BottomTabNavigator() {
                 name="ToSearch"
                 component={ToSearch}
                 options={({ navigation }: RootTabScreenProps<'ToSearch'>) => ({
-                    title: 'ToSearch',
+                    title: 'To Search',
                     header: (props) => <CustomNavigationBar navigation={navigation} route={props.route} options={props.options} back={false} />,
                     tabBarIcon: ({ color, size }) => {
                         return <Feather size={size} name="tv" color={color} />;
@@ -123,7 +123,9 @@ function CustomNavigationBar(props: { route: any, options: any, navigation: any,
                     }>
                     <Menu.Item
                         onPress={() => {
-                            props.navigation.navigate({ name: 'WebView', params: { url: "https://www.google.com/", title: "Search", script: WebviewSaveLink } })
+                            const url = "https://www.google.com/"
+                            const script = WebviewTooKit.replace("#d#", url)
+                            props.navigation.navigate({ name: 'WebView', params: { url: url, title: "Search", script: script } })
                             setVisible(false)
                         }}
                         title="Search"

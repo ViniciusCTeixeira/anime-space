@@ -1,32 +1,46 @@
 import * as React from "react";
 
-import { Dimensions, FlatList, Image, Text, TouchableOpacity, View, View as DefaultView } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import {Dimensions, FlatList, Image, Text, TouchableOpacity, View, View as DefaultView} from "react-native";
+import {FontAwesome} from "@expo/vector-icons";
 
-import { ToSearchProps, WebsitesProps } from "../../types/Pages";
+import {ToSearchProps, WebsitesProps} from "../../types/Pages";
 
-import { CalcNumColumns } from "../../resources/Tools"
-import { WebviewSaveLink, WebviewTooKit } from "../../resources/constants";
+import {CalcNumColumns} from "../../resources/Tools"
+import {WebviewTooKit} from "../../resources/constants";
 
 export function Container(props: DefaultView['props']) {
-    const { style, ...others } = props;
+    const {style, ...others} = props;
 
-    return <DefaultView style={[{ flex: 1, borderRadius: 10, padding: 10, flexDirection: "column" }, style]} {...others} />;
+    return <DefaultView
+        style={[{flex: 1, borderRadius: 10, padding: 10, flexDirection: "column"}, style]} {...others} />;
 }
 
 export function Paper(props: DefaultView['props']) {
-    const { style, ...others } = props;
+    const {style, ...others} = props;
 
-    return <DefaultView style={[{ flex: 1, borderRadius: 10, padding: 10, flexDirection: "column", backgroundColor: "rgba(79,79,79,0.5)" }, style]} {...others} />;
+    return <DefaultView style={[{
+        flex: 1,
+        borderRadius: 10,
+        padding: 10,
+        flexDirection: "column",
+        backgroundColor: "rgba(79,79,79,0.5)"
+    }, style]} {...others} />;
 }
 
 export function Divider(props: DefaultView['props']) {
-    const { style, ...others } = props;
+    const {style, ...others} = props;
 
-    return <DefaultView style={[{ borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 5 }, style]} {...others} />;
+    return <DefaultView
+        style={[{borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 5}, style]} {...others} />;
 }
 
-export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, deleteItem: any, updateLastAcess: any }) {
+export function WebsitesList(props: {
+    pages: WebsitesProps[],
+    navigation: any,
+    deleteItem: any,
+    updateLastAccess: any,
+    updateFavorite: any
+}) {
     const ScreenWidth = Dimensions.get("window").width;
     const FlatListItemWidth = 150;
     const FlatListItemMargin = 5;
@@ -43,20 +57,20 @@ export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, d
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}
             numColumns={numColumns}
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
                 <TouchableOpacity
                     onPress={() => {
-                        props.updateLastAcess(item);
+                        props.updateLastAccess(item);
                         const script = WebviewTooKit.replace("#d#", item.url)
                         props.navigation.navigate({
                             name: 'WebView',
-                            params: { url: item.url, title: item.name, script: WebviewTooKit }
+                            params: {url: item.url, title: item.name, script: script}
                         })
                     }}
                     style={{
                         flexDirection: "column",
                         borderWidth: 1,
-                        borderColor: "rgba(255, 255, 255, 0.6)",
+                        borderColor: item.isFavorite ? "rgba(218, 165, 32, 0.6)" : "rgba(255, 255, 255, 0.6)",
                         borderRadius: 15,
                         backgroundColor: "rgba(0, 0, 0, 0.6)",
                         alignItems: 'center',
@@ -65,50 +79,28 @@ export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, d
                         margin: FlatListItemMargin,
                     }}
                 >
-                    <Image source={{ uri: item.image }} style={{ width: 50, height: 50, marginTop: 5 }} />
-                    <Text numberOfLines={1} style={{ color: '#fff', fontSize: 15, fontWeight: 'bold' }}>{item.name}</Text>
-                    <Text style={{ color: '#fff', fontSize: 9, fontWeight: 'bold' }}>{item.lastAcess}</Text>
+                    <Image source={{uri: item.image}} style={{width: 50, height: 50, marginTop: 5}}/>
+                    <Text numberOfLines={1} style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+                    <Text style={{color: '#fff', fontSize: 9, fontWeight: 'bold'}}>{item.lastAcess}</Text>
 
-                    <View style={{ flex: 1, paddingVertical: 5, marginHorizontal: 1, flexDirection: "row", backgroundColor: "rgba(79,79,79,0.5)", borderRadius: 10 }}>
+                    <View style={{flex: 1, paddingVertical: 5, marginHorizontal: 1, flexDirection: "row"}}>
                         <TouchableOpacity
                             onPress={() => {
-                                props.deleteItem(item)
+                                props.updateFavorite(item)
                             }}
                             style={{
                                 flex: 1,
                                 borderWidth: 1,
                                 borderColor: "rgba(255, 255, 255, 0.6)",
                                 borderRadius: 5,
-                                backgroundColor: "rgba(255, 0, 0, 0.3)",
+                                backgroundColor: "rgba(218, 165, 32, 0.6)",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 marginVertical: 1,
                                 marginHorizontal: 2,
                             }}>
                             <FontAwesome
-                                name="trash-o"
-                                size={15}
-                                color={"#fff"}
-                            />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.deleteItem(item)
-                            }}
-                            style={{
-                                flex: 1,
-                                borderWidth: 1,
-                                borderColor: "rgba(255, 255, 255, 0.6)",
-                                borderRadius: 5,
-                                backgroundColor: "rgba(255, 0, 0, 0.3)",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginVertical: 1,
-                                marginHorizontal: 2,
-                            }}>
-                            <FontAwesome
-                                name="trash-o"
+                                name={item.isFavorite ? "star" : "star-o"}
                                 size={15}
                                 color={"#fff"}
                             />
@@ -136,9 +128,9 @@ export function WebsitesList(props: { pages: WebsitesProps[], navigation: any, d
                             />
                         </TouchableOpacity>
                     </View>
-
                 </TouchableOpacity>
-            )} />
+            )}
+        />
     )
 }
 
@@ -159,12 +151,16 @@ export function MangasToSearchList(props: { pages: ToSearchProps[], navigation: 
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.id}
             numColumns={numColumns}
-            renderItem={({ item, index }) => (
+            renderItem={({item, index}) => (
                 <TouchableOpacity
-                    onPress={() => props.navigation.navigate({
-                        name: 'WebView',
-                        params: { url: `https://www.google.com/search?q=${item.name}`, title: item.name, script: WebviewSaveLink }
-                    })}
+                    onPress={() => {
+                        const url = `https://www.google.com/search?q=${item.name}`
+                        const script = WebviewTooKit.replace("#d#", url)
+                        props.navigation.navigate({
+                            name: 'WebView',
+                            params: {url: url, title: item.name, script: script}
+                        })
+                    }}
                     style={{
                         flexDirection: "column",
                         borderWidth: 1,
@@ -177,8 +173,15 @@ export function MangasToSearchList(props: { pages: ToSearchProps[], navigation: 
                         margin: FlatListItemMargin,
                     }}
                 >
-                    <Text numberOfLines={2} style={{ color: '#fff', fontSize: 15, fontWeight: 'bold' }}>{item.name}</Text>
-                    <View style={{ flex: 1, paddingVertical: 5, marginHorizontal: 1, flexDirection: "row", backgroundColor: "rgba(79,79,79,0.5)", borderRadius: 10 }}>
+                    <Text numberOfLines={2} style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
+                    <View style={{
+                        flex: 1,
+                        paddingVertical: 5,
+                        marginHorizontal: 1,
+                        flexDirection: "row",
+                        backgroundColor: "rgba(79,79,79,0.5)",
+                        borderRadius: 10
+                    }}>
                         <TouchableOpacity
                             onPress={() => {
                                 props.deleteItem(item)
@@ -201,6 +204,6 @@ export function MangasToSearchList(props: { pages: ToSearchProps[], navigation: 
                         </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
-            )} />
+            )}/>
     )
 }

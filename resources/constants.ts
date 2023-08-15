@@ -11,7 +11,7 @@ createButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 createButton.style.color = 'white';
 createButton.style.padding = '5px';
 createButton.style.borderRadius = '50%';
-createButton.style.fontSize = '15px';
+createButton.style.fontSize = '20px';
 
 createButton.addEventListener('click', function handleClick(event) {
     var dummy = document.createElement('input'),
@@ -23,6 +23,15 @@ createButton.addEventListener('click', function handleClick(event) {
 });
 
 document.body.appendChild(createButton);
+
+var a = document.getElementsByTagName('a');
+for (i in a) {
+    if(a[i].target == '_blank'){
+        a[i].removeAttribute("target");
+        a[i].href = "#";
+    }
+}
+            
 true;
 `;
 
@@ -47,7 +56,7 @@ toolButton.style.outline = 'none';
 toolButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 toolButton.style.padding = '5px';
 toolButton.style.borderRadius = '50%';
-toolButton.style.fontSize = '15px';
+toolButton.style.fontSize = '20px';
 
 homeButton.innerText = '🏠';
 homeButton.style.position = 'fixed';
@@ -59,7 +68,7 @@ homeButton.style.outline = 'none';
 homeButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 homeButton.style.padding = '5px';
 homeButton.style.borderRadius = '50%';
-homeButton.style.fontSize = '15px';
+homeButton.style.fontSize = '20px';
 homeButton.style.display = "none";
 
 reloadButton.innerText = '🔄';
@@ -72,7 +81,7 @@ reloadButton.style.outline = 'none';
 reloadButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 reloadButton.style.padding = '5px';
 reloadButton.style.borderRadius = '50%';
-reloadButton.style.fontSize = '15px';
+reloadButton.style.fontSize = '20px';
 reloadButton.style.display = "none";
 
 backButton.innerText = '⬅️';
@@ -85,7 +94,7 @@ backButton.style.outline = 'none';
 backButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 backButton.style.padding = '5px';
 backButton.style.borderRadius = '50%';
-backButton.style.fontSize = '15px';
+backButton.style.fontSize = '20px';
 backButton.style.display = "none";
 
 forwardButton.innerText = '➡️';
@@ -98,7 +107,7 @@ forwardButton.style.outline = 'none';
 forwardButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 forwardButton.style.padding = '5px';
 forwardButton.style.borderRadius = '50%';
-forwardButton.style.fontSize = '15px';
+forwardButton.style.fontSize = '20px';
 forwardButton.style.display = "none";
 
 linkButton.innerText = '❤️';
@@ -111,7 +120,7 @@ linkButton.style.outline = 'none';
 linkButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
 linkButton.style.padding = '5px';
 linkButton.style.borderRadius = '50%';
-linkButton.style.fontSize = '15px';
+linkButton.style.fontSize = '20px';
 linkButton.style.display = "none";
 
 toolButton.addEventListener('click', function handleClick(event) {
@@ -173,5 +182,14 @@ document.body.appendChild(reloadButton);
 document.body.appendChild(backButton);
 document.body.appendChild(forwardButton);
 document.body.appendChild(linkButton);
+
+var a = document.getElementsByTagName('a');
+for (i in a) {
+    if(a[i].target == '_blank'){
+        a[i].removeAttribute("target");
+        a[i].href = "#";
+    }
+}
+
 true;
 `;
