@@ -31,7 +31,7 @@ export async function WebsiteInfo(urlString: string) {
         websiteTitle = websiteTitle.replace(/(\s\(.*?\))|<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, '');
 
         // Extract icon
-        const gstatic: string = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=32`;
+        const gstatic: string = `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${urlString}&size=48`;
         const websiteIconBase64 = await UrlToBase64(gstatic);
         let websiteIcon: string
 

@@ -3,7 +3,7 @@ import {Dimensions} from "react-native";
 import {ActivityIndicator} from 'react-native-paper';
 import {WebView as ReactNativeWebview} from 'react-native-webview';
 
-import {RootStackScreenProps} from "../../../types/ReactNavigation";
+import {RootStackScreenProps} from "../../types/ReactNavigation";
 
 export default function WebView({route, navigation}: RootStackScreenProps<'WebView'>) {
     const script = route.params.script ? route.params.script : ``;

@@ -1,37 +1,19 @@
 import * as React from "react";
-
-import {Dimensions, FlatList, Image, Text, TouchableOpacity, View, View as DefaultView} from "react-native";
-import {FontAwesome} from "@expo/vector-icons";
+import {Dimensions, FlatList, Image, TouchableOpacity, View} from "react-native";
+import {Button, Card, Modal, Portal, Text, useTheme} from "react-native-paper";
+import {Feather} from "@expo/vector-icons";
 
 import {ToSearchProps, WebsitesProps} from "../../types/Pages";
 
 import {CalcNumColumns} from "../../resources/Tools"
 import {WebviewTooKit} from "../../resources/constants";
 
-export function Container(props: DefaultView['props']) {
+
+export function Container(props: View['props']) {
     const {style, ...others} = props;
 
-    return <DefaultView
-        style={[{flex: 1, borderRadius: 10, padding: 10, flexDirection: "column"}, style]} {...others} />;
-}
-
-export function Paper(props: DefaultView['props']) {
-    const {style, ...others} = props;
-
-    return <DefaultView style={[{
-        flex: 1,
-        borderRadius: 10,
-        padding: 10,
-        flexDirection: "column",
-        backgroundColor: "rgba(79,79,79,0.5)"
-    }, style]} {...others} />;
-}
-
-export function Divider(props: DefaultView['props']) {
-    const {style, ...others} = props;
-
-    return <DefaultView
-        style={[{borderBottomColor: 'white', borderBottomWidth: 1, marginVertical: 5}, style]} {...others} />;
+    return <View
+        style={[{flex: 1, padding: 10, flexDirection: "column"}, style]} {...others} />;
 }
 
 export function WebsitesList(props: {
@@ -58,77 +40,72 @@ export function WebsitesList(props: {
             keyExtractor={item => item.id}
             numColumns={numColumns}
             renderItem={({item, index}) => (
-                <TouchableOpacity
-                    onPress={() => {
-                        props.updateLastAccess(item);
-                        const script = WebviewTooKit.replace("#d#", item.url)
-                        props.navigation.navigate({
-                            name: 'WebView',
-                            params: {url: item.url, title: item.name, script: script}
-                        })
-                    }}
+                <Card
                     style={{
-                        flexDirection: "column",
                         borderWidth: 1,
                         borderColor: item.isFavorite ? "rgba(218, 165, 32, 0.6)" : "rgba(255, 255, 255, 0.6)",
                         borderRadius: 15,
-                        backgroundColor: "rgba(0, 0, 0, 0.6)",
                         alignItems: 'center',
-                        padding: 2,
                         width: FlatListItemWidth,
                         margin: FlatListItemMargin,
                     }}
                 >
-                    <Image source={{uri: item.image}} style={{width: 50, height: 50, marginTop: 5}}/>
-                    <Text numberOfLines={1} style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
-                    <Text style={{color: '#fff', fontSize: 9, fontWeight: 'bold'}}>{item.lastAcess}</Text>
-
-                    <View style={{flex: 1, paddingVertical: 5, marginHorizontal: 1, flexDirection: "row"}}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.updateFavorite(item)
-                            }}
-                            style={{
-                                flex: 1,
-                                borderWidth: 1,
-                                borderColor: "rgba(255, 255, 255, 0.6)",
-                                borderRadius: 5,
-                                backgroundColor: "rgba(218, 165, 32, 0.6)",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginVertical: 1,
-                                marginHorizontal: 2,
-                            }}>
-                            <FontAwesome
-                                name={item.isFavorite ? "star" : "star-o"}
-                                size={15}
-                                color={"#fff"}
-                            />
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.deleteItem(item)
-                            }}
-                            style={{
-                                flex: 1,
-                                borderWidth: 1,
-                                borderColor: "rgba(255, 255, 255, 0.6)",
-                                borderRadius: 5,
-                                backgroundColor: "rgba(255, 0, 0, 0.3)",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginVertical: 1,
-                                marginHorizontal: 2,
-                            }}>
-                            <FontAwesome
-                                name="trash-o"
-                                size={15}
-                                color={"#fff"}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </TouchableOpacity>
+                    <Card.Content style={{alignItems: 'center',}}>
+                        <Image source={{uri: item.image}} style={{width: 48, height: 48, marginTop: 5}}/>
+                        <Text numberOfLines={1} variant="titleMedium">{item.name}</Text>
+                        <Text variant="bodySmall">{item.lastAcess}</Text>
+                        <View style={{marginTop: 2, flexDirection: "row"}}>
+                            <Button
+                                style={{marginHorizontal: 2, width: 40}}
+                                buttonColor={item.isFavorite ? "rgba(218, 165, 32, 0.6)" : ""}
+                                compact={true}
+                                mode={"contained"}
+                                onPress={() => {
+                                    props.updateFavorite(item)
+                                }}
+                            >
+                                <Feather
+                                    name="star"
+                                    size={15}
+                                    color={"#fff"}
+                                />
+                            </Button>
+                            <Button
+                                style={{marginHorizontal: 2, width: 40}}
+                                compact={true}
+                                mode={"contained"}
+                                onPress={() => {
+                                    props.deleteItem(item)
+                                }}
+                            >
+                                <Feather
+                                    name="trash"
+                                    size={15}
+                                    color={"#fff"}
+                                />
+                            </Button>
+                            <Button
+                                style={{marginHorizontal: 2, width: 40}}
+                                compact={true}
+                                mode={"contained"}
+                                onPress={() => {
+                                    props.updateLastAccess(item);
+                                    const script = WebviewTooKit.replace("#d#", item.url)
+                                    props.navigation.navigate({
+                                        name: 'WebView',
+                                        params: {url: item.url, title: item.name, script: script}
+                                    })
+                                }}
+                            >
+                                <Feather
+                                    name="book-open"
+                                    size={15}
+                                    color={"#fff"}
+                                />
+                            </Button>
+                        </View>
+                    </Card.Content>
+                </Card>
             )}
         />
     )
@@ -152,58 +129,55 @@ export function MangasToSearchList(props: { pages: ToSearchProps[], navigation: 
             keyExtractor={item => item.id}
             numColumns={numColumns}
             renderItem={({item, index}) => (
-                <TouchableOpacity
-                    onPress={() => {
-                        const url = `https://www.google.com/search?q=${item.name}`
-                        const script = WebviewTooKit.replace("#d#", url)
-                        props.navigation.navigate({
-                            name: 'WebView',
-                            params: {url: url, title: item.name, script: script}
-                        })
-                    }}
+                <Card
                     style={{
-                        flexDirection: "column",
                         borderWidth: 1,
                         borderColor: "rgba(255, 255, 255, 0.6)",
                         borderRadius: 15,
-                        backgroundColor: "rgba(0, 0, 0, 0.6)",
                         alignItems: 'center',
-                        padding: 2,
                         width: FlatListItemWidth,
                         margin: FlatListItemMargin,
                     }}
                 >
-                    <Text numberOfLines={2} style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>{item.name}</Text>
-                    <View style={{
-                        flex: 1,
-                        paddingVertical: 5,
-                        marginHorizontal: 1,
-                        flexDirection: "row",
-                        backgroundColor: "rgba(79,79,79,0.5)",
-                        borderRadius: 10
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                props.deleteItem(item)
-                            }}
-                            style={{
-                                flex: 1,
-                                borderWidth: 1,
-                                borderColor: "rgba(255, 255, 255, 0.6)",
-                                borderRadius: 5,
-                                backgroundColor: "rgba(255, 0, 0, 0.3)",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                marginHorizontal: 5
-                            }}>
-                            <FontAwesome
-                                name="trash-o"
-                                size={20}
-                                color={"#fff"}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </TouchableOpacity>
+                    <Card.Content style={{alignItems: 'center',}}>
+                        <Text numberOfLines={2} variant="titleMedium">{item.name}</Text>
+                        <View style={{marginTop: 2, flexDirection: "row"}}>
+                            <Button
+                                style={{marginHorizontal: 2, width: 40}}
+                                compact={true}
+                                mode={"contained"}
+                                onPress={() => {
+                                    props.deleteItem(item)
+                                }}
+                            >
+                                <Feather
+                                    name="trash"
+                                    size={15}
+                                    color={"#fff"}
+                                />
+                            </Button>
+                            <Button
+                                style={{marginHorizontal: 2, width: 40}}
+                                compact={true}
+                                mode={"contained"}
+                                onPress={() => {
+                                    const url = `https://www.google.com/search?q=${item.name}`
+                                    const script = WebviewTooKit.replace("#d#", url)
+                                    props.navigation.navigate({
+                                        name: 'WebView',
+                                        params: {url: url, title: item.name, script: script}
+                                    })
+                                }}
+                            >
+                                <Feather
+                                    name="book-open"
+                                    size={15}
+                                    color={"#fff"}
+                                />
+                            </Button>
+                        </View>
+                    </Card.Content>
+                </Card>
             )}/>
     )
 }

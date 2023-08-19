@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {WebsitesProps} from "../../types/Pages";
 
-export async function Get(type: number){
+export async function Get(type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         const data = await AsyncStorage.getItem(key);
         if (data) {
@@ -17,15 +17,16 @@ export async function Get(type: number){
         return [];
     }
 }
+
 export async function Save(site: WebsitesProps | WebsitesProps[], type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
 
-        if(Array.isArray(site)){
+        if (Array.isArray(site)) {
             sites ? sites.concat(site) : sites = site;
-        }else{
+        } else {
             sites ? sites.push(site) : sites = [site];
         }
 
@@ -39,7 +40,7 @@ export async function Save(site: WebsitesProps | WebsitesProps[], type: number) 
 
 export async function Update(site: WebsitesProps, type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -58,7 +59,7 @@ export async function Update(site: WebsitesProps, type: number) {
 
 export async function updateFavorite(site: WebsitesProps, type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -77,7 +78,7 @@ export async function updateFavorite(site: WebsitesProps, type: number) {
 
 export async function updateLastAccess(site: WebsitesProps, type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -87,10 +88,10 @@ export async function updateLastAccess(site: WebsitesProps, type: number) {
         }
 
         let today = new Date();
-        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-        sites[indexToUpdate]["lastAcess"] = date+' '+time;
+        sites[indexToUpdate]["lastAcess"] = date + ' ' + time;
         await AsyncStorage.setItem(key, JSON.stringify(sites))
         return true;
     } catch (e) {
@@ -100,7 +101,7 @@ export async function updateLastAccess(site: WebsitesProps, type: number) {
 
 export async function Delete(site: WebsitesProps, type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -119,7 +120,7 @@ export async function Delete(site: WebsitesProps, type: number) {
 
 export async function Exists(url: string, type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.url === url);
@@ -132,7 +133,7 @@ export async function Exists(url: string, type: number) {
 
 export async function Clear(type: number) {
     try {
-        let key  = type == 0 ? "@animes" : "@animeWebsites";
+        let key = type == 1 ? "@animes" : "@animeWebsites";
 
         await AsyncStorage.setItem(key, '')
         return true;

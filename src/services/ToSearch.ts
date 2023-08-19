@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {ToSearchProps} from "../../types/Pages";
 
-export async function Get(){
+export async function Get() {
     try {
         const data = await AsyncStorage.getItem("@mangasToSearch");
         if (data) {
@@ -19,9 +19,9 @@ export async function Save(site: ToSearchProps) {
     try {
 
         let sites: ToSearchProps[] = JSON.parse(<string>await AsyncStorage.getItem("@mangasToSearch"));
-        if(Array.isArray(site)){
+        if (Array.isArray(site)) {
             sites ? sites.concat(site) : sites = site;
-        }else{
+        } else {
             sites ? sites.push(site) : sites = [site];
         }
 

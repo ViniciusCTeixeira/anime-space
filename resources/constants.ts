@@ -38,11 +38,11 @@ true;
 export const WebviewTooKit = `
 let hidden = true;
 
-const toolButton = document.createElement('button');
-const homeButton = document.createElement('button');
-const reloadButton = document.createElement('button');
-const backButton = document.createElement('button');
-const forwardButton = document.createElement('button');
+const toolButton = document.createElement('a');
+const homeButton = document.createElement('a');
+const reloadButton = document.createElement('a');
+const backButton = document.createElement('a');
+const forwardButton = document.createElement('a');
 
 const linkButton = document.createElement('button');
 
@@ -144,9 +144,7 @@ toolButton.addEventListener('click', function handleClick(event) {
 
 homeButton.addEventListener('click', function handleClick(event) {
     event.preventDefault();
-    if (window.location.hostname != "#d#") {
-        window.location.href = "#d#";
-    }
+    window.location.href = "#d#";
 });
 
 reloadButton.addEventListener('click', function handleClick(event) {
@@ -167,12 +165,12 @@ forwardButton.addEventListener('click', function handleClick(event) {
 });
 
 linkButton.addEventListener('click', function handleClick(event) {
-    event.preventDefault();
     var dummy = document.createElement('input'),
     text = window.location.href;
     document.body.appendChild(dummy);
     dummy.value = text;
     dummy.select();
+    document.execCommand('copy');
     document.body.removeChild(dummy);
 });
 
