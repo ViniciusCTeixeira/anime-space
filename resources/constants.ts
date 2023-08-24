@@ -1,41 +1,4 @@
-export const WebviewSaveLink = `
-const createButton = document.createElement('button');
-createButton.innerText = '❤️';
-createButton.style.position = 'fixed';
-createButton.style.bottom = '20px';
-createButton.style.left = '20px';
-createButton.style.zIndex = '99999';
-createButton.style.border = 'none';
-createButton.style.outline = 'none';
-createButton.style.backgroundColor = 'rgba(60, 60, 60, 0.5)';
-createButton.style.color = 'white';
-createButton.style.padding = '5px';
-createButton.style.borderRadius = '50%';
-createButton.style.fontSize = '20px';
-
-createButton.addEventListener('click', function handleClick(event) {
-    var dummy = document.createElement('input'),
-    text = window.location.href;
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.body.removeChild(dummy);
-});
-
-document.body.appendChild(createButton);
-
-var a = document.getElementsByTagName('a');
-for (i in a) {
-    if(a[i].target == '_blank'){
-        a[i].removeAttribute("target");
-        a[i].href = "#";
-    }
-}
-            
-true;
-`;
-
-export const WebviewTooKit = `
+export const WebviewTooKit: string = `
 function ready(callback){
     // in case the document is already rendered
     if (document.readyState!='loading') callback();
@@ -46,6 +9,7 @@ function ready(callback){
         if (document.readyState=='complete') callback();
     });
 }
+
 ready(function() {
     let hidden = true;
     
@@ -192,13 +156,18 @@ ready(function() {
     document.body.appendChild(forwardButton);
     document.body.appendChild(linkButton);
     
-    var a = document.getElementsByTagName('a');
-    for (i in a) {
-        if(a[i].target == '_blank'){
-            a[i].removeAttribute("target");
-            a[i].href = "#";
+    var links = document.getElementsByTagName('a');
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        if (link.target === '_blank') {
+            link.removeAttribute('target')
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
         }
     }
 });
 true;
 `;
+
+export const easylist: string = ""

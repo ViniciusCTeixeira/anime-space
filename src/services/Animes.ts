@@ -4,7 +4,7 @@ import {WebsitesProps} from "../../types/Pages";
 
 export async function Get(type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         const data = await AsyncStorage.getItem(key);
         if (data) {
@@ -20,7 +20,7 @@ export async function Get(type: number) {
 
 export async function Save(site: WebsitesProps | WebsitesProps[], type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
 
@@ -40,7 +40,7 @@ export async function Save(site: WebsitesProps | WebsitesProps[], type: number) 
 
 export async function Update(site: WebsitesProps, type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -59,7 +59,7 @@ export async function Update(site: WebsitesProps, type: number) {
 
 export async function updateFavorite(site: WebsitesProps, type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -78,7 +78,7 @@ export async function updateFavorite(site: WebsitesProps, type: number) {
 
 export async function updateLastAccess(site: WebsitesProps, type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -101,7 +101,7 @@ export async function updateLastAccess(site: WebsitesProps, type: number) {
 
 export async function Delete(site: WebsitesProps, type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.id === site.id);
@@ -120,7 +120,7 @@ export async function Delete(site: WebsitesProps, type: number) {
 
 export async function Exists(url: string, type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         let sites: WebsitesProps[] = JSON.parse(<string>await AsyncStorage.getItem(key));
         let indexToUpdate = sites.findIndex(item => item.url === url);
@@ -133,7 +133,7 @@ export async function Exists(url: string, type: number) {
 
 export async function Clear(type: number) {
     try {
-        let key = type == 1 ? "@animes" : "@animeWebsites";
+        let key = type ? "@animes" : "@animeWebsites";
 
         await AsyncStorage.setItem(key, '')
         return true;
